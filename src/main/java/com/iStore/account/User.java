@@ -1,4 +1,4 @@
-package com.iStore.authentification;
+package com.iStore.account;
 
 
 public class User {
@@ -8,13 +8,6 @@ public class User {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
-    }
-
-    public String getEmail(){
-        return this.email;
-    }
-    public String getPassword(){
-        return this.password;
     }
 
     public boolean checkLogin (String email, String password) {
