@@ -1,5 +1,7 @@
 package com.iStore.account;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +18,7 @@ public class LoginSysteme {
 
     public LoginSysteme() {
         userList = new ArrayList<>();
-        userList.add(new User("titi@blabla.com", "titi"));
+        userList.add(new User("titi@blabla.com", BCrypt.hashpw("titi", BCrypt.gensalt())));
         emailPattern = Pattern.compile(regexPattern);
     }
 
