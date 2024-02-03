@@ -18,7 +18,7 @@ public class LoginSysteme {
 
     public LoginSysteme() {
         userList = new ArrayList<>();
-        userList.add(new User("titi@blabla.com", BCrypt.hashpw("titi", BCrypt.gensalt())));
+        userList.add(new User("titi@blabla.com", BCrypt.hashpw("titi", BCrypt.gensalt()), "admin", "1", "titi"));
         emailPattern = Pattern.compile(regexPattern);
     }
 
@@ -42,30 +42,33 @@ public class LoginSysteme {
     }
 
     public static void main(String[] args) {
-        LoginSysteme loginSystem = new LoginSysteme();
+        //test the login systeme and create account systeme
+        LoginSysteme loginSysteme = new LoginSysteme();
+        CreateAccSysteme createAccSysteme = new CreateAccSysteme(loginSysteme.userList);
 
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your email: ");
+        String email = scanner.nextLine();
+        System.out.println("Enter your password: ");
+        String password = scanner.nextLine();
+        if (loginSysteme.loginUser(email, password)) {
+            System.out.println("Login successful");
+        } else {
+            System.out.println("Login failed");
+        }
 
-        boolean loginSuccessful = false;
-
-        while (!loginSuccessful) {
-            System.out.println("Enter your email: ");
-            String email = scanner.nextLine();
-
-            if (!loginSystem.validateEmail(email)) {
-                System.out.println("Invalid email format. Please enter a valid email.");
-                continue;
+        System.out.println("Enter your email: ");
+        email = scanner.nextLine();
+        System.out.println("Enter your password: ");
+        password = scanner.nextLine();
+        if (createAccSysteme.createUser(email, password)) {
+            System.out.println("Account created successfully");
+            //print the list of users
+            for (User user : loginSysteme.userList) {
+                System.out.println(user.email + " " + user.passwordHash + " " + user.role + " " + user.id + " " + user.pseudo);
             }
-
-            System.out.println("Enter your password: ");
-            String password = scanner.nextLine();
-
-            loginSuccessful = loginSystem.loginUser(email, password);
-            if (loginSuccessful) {
-                System.out.println("Login successful");
-            } else {
-                System.out.println("Login failed, password or email incorrect");
-            }
+        } else {
+            System.out.println("Account creation failed");
         }
     }
 }
