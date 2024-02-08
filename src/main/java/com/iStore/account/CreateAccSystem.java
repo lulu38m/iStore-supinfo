@@ -2,11 +2,11 @@ package com.iStore.account;
 
 import java.util.List;
 
-public class CreateAccSysteme {
+public class CreateAccSystem {
     //systeme to create account and add to the list
     private List<User> userList;
 
-    public CreateAccSysteme(List<User> userList) {
+    public CreateAccSystem(List<User> userList) {
         this.userList = userList;
     }
 

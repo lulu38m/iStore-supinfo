@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginSysteme {
+public class LoginSystem {
     private List<User> userList;
 
     private static final String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
@@ -16,7 +16,7 @@ public class LoginSysteme {
 
     private Pattern emailPattern;
 
-    public LoginSysteme() {
+    public LoginSystem() {
         userList = new ArrayList<>();
         userList.add(new User("titi@blabla.com", BCrypt.hashpw("titi", BCrypt.gensalt()), "admin", "1", "titi"));
         emailPattern = Pattern.compile(regexPattern);
@@ -43,8 +43,8 @@ public class LoginSysteme {
 
     public static void main(String[] args) {
         //test the login systeme and create account systeme
-        LoginSysteme loginSysteme = new LoginSysteme();
-        CreateAccSysteme createAccSysteme = new CreateAccSysteme(loginSysteme.userList);
+        LoginSystem loginSysteme = new LoginSystem();
+        CreateAccSystem createAccSysteme = new CreateAccSystem(loginSysteme.userList);
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your email: ");
