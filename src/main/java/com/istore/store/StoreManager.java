@@ -1,4 +1,4 @@
-package com.iStore.store;
+package com.istore.store;
 
 public class StoreManager {
 }
