@@ -9,7 +9,6 @@ public class MainWindow extends JFrame {
 
     public MainWindow(UserController userController) {
         this.initializeWindow();
-
         add(new LoginOrCreateWindow(userController));
     }
 
@@ -18,5 +17,12 @@ public class MainWindow extends JFrame {
         setSize(400, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public void changeCurrentWindow(JPanel panel) {
+        removeAll();
+        add(panel);
+        revalidate();
+        repaint();
     }
 }

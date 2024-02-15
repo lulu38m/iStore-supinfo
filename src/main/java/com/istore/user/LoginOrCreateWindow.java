@@ -17,6 +17,14 @@ public class LoginOrCreateWindow extends JPanel {
         add(noAccountPanel());
     }
 
+    public void changeWindowToLogin() {
+        removeAll();
+        add(new LoginWindow(this.userController));
+        add(noAccountPanel());
+        revalidate();
+        repaint();
+    }
+
     private JPanel noAccountPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -26,7 +34,7 @@ public class LoginOrCreateWindow extends JPanel {
 
         createAccountButton.addActionListener(e -> {
             removeAll();
-            add(new CreateAccountWindow(this.userController));
+            add(new CreateAccountWindow(this.userController, this));
             add(alreadyHaveAccountPanel());
             revalidate();
             repaint();

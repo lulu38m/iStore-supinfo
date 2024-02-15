@@ -1,5 +1,7 @@
 package com.istore.user;
 
+import com.istore.Main;
+
 import javax.swing.*;
 
 public class CreateAccountWindow extends JPanel {
@@ -8,9 +10,11 @@ public class CreateAccountWindow extends JPanel {
     private JTextField emailField;
     private JPasswordField passwordField;
     private JButton registerButton;
+    private LoginOrCreateWindow parentWindow;
 
-    public CreateAccountWindow(UserController userController) {
+    public CreateAccountWindow(UserController userController, LoginOrCreateWindow parentWindow) {
         this.userController = userController;
+        this.parentWindow = parentWindow;
         this.initializeWindow();
     }
 
@@ -29,27 +33,7 @@ public class CreateAccountWindow extends JPanel {
         panel.add(new JLabel("Mot de passe:"));
         panel.add(passwordField);
 
-        registerButton.addActionListener(e -> {
-            if (usernameField.getText().isEmpty() || emailField.getText().isEmpty() || passwordField.getPassword().length == 0) {
-                JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            boolean isEmailValid = userController.validateEmail(emailField.getText());
-            if (!isEmailValid) {
-                JOptionPane.showMessageDialog(this, "L'adresse email n'est pas valide", "Erreur", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            boolean isUsernameAvailable = userController.isUsernameAvailable(usernameField.getText());
-            if (!isUsernameAvailable) {
-                JOptionPane.showMessageDialog(this, "Le nom d'utilisateur est déjà pris", "Erreur", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            userController.createUser(usernameField.getText(), emailField.getText(), new String(passwordField.getPassword()));
-            JOptionPane.showMessageDialog(this, "Compte créé avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
-        });
+        registerButton.addActionListener(e -> handleRegister());
 
         // Add the action button in the center of the panel
         JPanel buttonPanel = new JPanel();
@@ -57,5 +41,35 @@ public class CreateAccountWindow extends JPanel {
         panel.add(buttonPanel);
 
         add(panel);
+    }
+
+    private void handleRegister() {
+        if (usernameField.getText().isEmpty() || emailField.getText().isEmpty() || passwordField.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        boolean isEmailValid = userController.validateEmail(emailField.getText());
+        if (!isEmailValid) {
+            JOptionPane.showMessageDialog(this, "L'adresse email n'est pas valide", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        boolean isUsernameAvailable = userController.isPseudoAvailable(usernameField.getText());
+        if (!isUsernameAvailable) {
+            JOptionPane.showMessageDialog(this, "Le nom d'utilisateur est déjà pris", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        boolean isEmailAvailable = userController.isEmailAvailable(emailField.getText());
+        if (!isEmailAvailable) {
+            JOptionPane.showMessageDialog(this, "L'adresse email est déjà utilisée", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        userController.createUser(emailField.getText(), usernameField.getText(), String.valueOf(passwordField.getPassword()));
+        JOptionPane.showMessageDialog(this, "Compte créé avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
+
+        parentWindow.changeWindowToLogin();
     }
 }

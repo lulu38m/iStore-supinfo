@@ -25,10 +25,33 @@ public class LoginWindow extends JPanel {
         panel.add(new JLabel("Mot de passe:"));
         panel.add(passwordField);
 
+        loginButton.addActionListener(e -> handleLogin());
+
         // Add the action button in the center of the panel
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(loginButton);
         panel.add(buttonPanel);
         add(panel);
+    }
+
+    private void handleLogin() {
+        if (usernameField.getText().isEmpty() || passwordField.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        User user = userController.getUserByUsername(usernameField.getText());
+        if (user == null) {
+            JOptionPane.showMessageDialog(this, "Nom d'utilisateur ou mot de passe incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        boolean isPasswordCorrect = userController.checkUserLogins(user, usernameField.getText(), String.valueOf(passwordField.getPassword()));
+        if (!isPasswordCorrect) {
+            JOptionPane.showMessageDialog(this, "Nom d'utilisateur ou mot de passe incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Connexion réussie", "Succès", JOptionPane.INFORMATION_MESSAGE);
     }
 }
