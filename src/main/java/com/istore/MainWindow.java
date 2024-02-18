@@ -1,5 +1,7 @@
 package com.istore;
 
+import com.istore.store.ListStoreWindow;
+import com.istore.store.StoreController;
 import com.istore.user.LoginOrCreateWindow;
 import com.istore.user.UserController;
 
@@ -7,9 +9,9 @@ import javax.swing.*;
 
 public class MainWindow extends JFrame {
 
-    public MainWindow(UserController userController) {
+    public MainWindow(UserController userController, StoreController storeController) {
         this.initializeWindow();
-        add(new LoginOrCreateWindow(userController));
+        add(new ListStoreWindow(storeController));
     }
 
     private void initializeWindow() {
