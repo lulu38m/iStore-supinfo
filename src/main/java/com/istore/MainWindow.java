@@ -1,13 +1,11 @@
 package com.istore;
 
 import com.istore.menu.AdminMenu;
-import com.istore.menu.MenuItem;
 import com.istore.menu.UserMenu;
 import com.istore.store.ListStoreWindow;
 import com.istore.user.*;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 
 public class MainWindow extends JFrame implements UserLoginEventsListener {
 
@@ -40,10 +38,8 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
     public void onLogin(User user) {
         loggedInUser = user;
         userLabel.setText("Hello, " + user.getPseudo() + "!");
-
-        updateMenuBar();
-
         windowManager.changeCurrentWindow(new ListStoreWindow());
+        updateMenuBar();
     }
 
     @Override
