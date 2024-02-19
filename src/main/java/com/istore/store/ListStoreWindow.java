@@ -1,13 +1,20 @@
 package com.istore.store;
 
+import com.istore.Main;
+import com.istore.MainWindow;
+import com.istore.user.UserController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
 
 public class ListStoreWindow extends JPanel implements StoreListener {
 
     private final StoreController storeController;
     private final JPanel storesPanel;
+
 
     public ListStoreWindow(StoreController storeController) {
         this.storeController = storeController;
@@ -27,6 +34,10 @@ public class ListStoreWindow extends JPanel implements StoreListener {
         for (Store store : storeController.getStoresList()) {
             JButton storeButton = new JButton(store.getName());
             storesPanel.add(storeButton);
+            addActionListener(e -> {
+                MainWindow window = Main.getWindow();
+                window.changeCurrentWindow(new StoreWindow(storeController));
+            });
         }
         JScrollPane storesScrollPane = new JScrollPane(storesPanel);
         add(storesScrollPane, BorderLayout.CENTER);

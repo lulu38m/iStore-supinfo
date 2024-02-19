@@ -11,7 +11,7 @@ public class MainWindow extends JFrame {
 
     public MainWindow(UserController userController, StoreController storeController) {
         this.initializeWindow();
-        add(new ListStoreWindow(storeController));
+        add(new ListStoreWindow(storeController ));
     }
 
     private void initializeWindow() {
