@@ -1,9 +1,6 @@
 package com.istore;
 
-import com.istore.user.Role;
-import com.istore.user.User;
-import com.istore.user.UserController;
-import com.istore.user.UserModel;
+import com.istore.user.*;
 import lombok.Getter;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -14,11 +11,18 @@ public class Main {
     private static UserController userController;
 
     public static void main(String[] args) {
+        WhitelistUserModel whitelistUserModel = new WhitelistUserModel();
+        WhitelistUserController whitelistUserController = new WhitelistUserController(whitelistUserModel);
+
         UserModel userModel = new UserModel();
+        userController = new UserController(userModel, whitelistUserController);
+
+        // Temporary data
+//        whitelistUserController.addWhitelistedEmail("bbb@bbb.fr");
         userModel.addUser(new User("aaa@aaa.fr", "aaa", BCrypt.hashpw("aaa", BCrypt.gensalt()), Role.USER));
-        userController = new UserController(userModel);
 
         window = new MainWindow(userController);
         window.setVisible(true);
     }
+
 }
