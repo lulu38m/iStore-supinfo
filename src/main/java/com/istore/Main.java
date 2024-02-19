@@ -1,5 +1,6 @@
 package com.istore;
 
+import com.istore.database.DbTools;
 import com.istore.user.*;
 import lombok.Getter;
 import org.mindrot.jbcrypt.BCrypt;
@@ -11,6 +12,9 @@ public class Main {
     private static UserController userController;
 
     public static void main(String[] args) {
+        DbTools dbTools = new DbTools();
+        dbTools.initDatabase();
+
         WhitelistUserModel whitelistUserModel = new WhitelistUserModel();
         WhitelistUserController whitelistUserController = new WhitelistUserController(whitelistUserModel);
 
