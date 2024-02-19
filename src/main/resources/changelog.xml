@@ -7,13 +7,13 @@
 
     <changeSet id="1" author="titi">
         <createTable tableName="user">
-            <column name="id" type="int" autoIncrement="true">
+            <column name="id" type="varchar(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="email" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="username" type="varchar(255)">
+            <column name="pseudo" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="password" type="varchar(255)">

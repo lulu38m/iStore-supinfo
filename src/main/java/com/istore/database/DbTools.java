@@ -14,9 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DbTools {
-    private String url = "jdbc:h2:file:./build/istore;AUTO_SERVER=true";
-    private String user = "sa";
-    private String passwd = "";
+    private static String url = "jdbc:h2:file:./build/istore;AUTO_SERVER=true";
+    private static String user = "sa";
+    private static String passwd = "";
 
     public void initDatabase() {
 
@@ -37,7 +37,7 @@ public class DbTools {
         }
     }
 
-    public Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, passwd);
 
     }

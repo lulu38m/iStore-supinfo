@@ -13,6 +13,9 @@ public class WhitelistUserController {
         }
         whitelistUserModel.addWhitelistedEmail(email);
     }
+    public void addWhitelistedEmail(String email) {
+        whitelistUserModel.addWhitelistedEmail(email);
+    }
 
     public boolean containsWhitelistedEmail(String email) {
         return whitelistUserModel.getWhitelistedEmails().contains(email);
