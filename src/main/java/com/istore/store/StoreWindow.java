@@ -1,10 +1,11 @@
 package com.istore.store;
 
 import com.istore.WindowManager;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class  StoreWindow extends JPanel {
+public class StoreWindow extends JPanel {
 
     private JLabel storeNameLabel;
 
@@ -12,5 +13,12 @@ public class  StoreWindow extends JPanel {
         setLayout(new BorderLayout());
         storeNameLabel = new JLabel(store.getName());
         add(storeNameLabel, BorderLayout.NORTH);
+
+        JPanel panel = new JPanel(new BorderLayout());
+
+        JTable tableitems = new JTable(new ItemsTableModel(store.getInventory().getItemsList()));
+
+        panel.add(new JScrollPane(tableitems), BorderLayout.CENTER);
+        add(panel, BorderLayout.CENTER);
     }
 }

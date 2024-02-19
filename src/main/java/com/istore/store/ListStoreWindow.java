@@ -1,19 +1,25 @@
 package com.istore.store;
 
 import com.istore.WindowManager;
+import com.istore.inventory.Inventory;
+import com.istore.inventory.InventoryController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListStoreWindow extends JPanel implements StoreListener {
 
     private final StoreController storeController;
+
+    private final InventoryController inventoryController;
     private final JPanel storesPanel;
     private final WindowManager windowManager;
 
-    public ListStoreWindow(StoreController storeController, WindowManager windowManager) {
+    public ListStoreWindow(StoreController storeController, InventoryController inventoryController, WindowManager windowManager) {
         this.storeController = storeController;
+        this.inventoryController = inventoryController;
         this.storesPanel = new JPanel(new GridLayout(storeController.getStoresList().size(), 1));
         this.windowManager = windowManager;
         initializeWindow();
@@ -46,7 +52,8 @@ public class ListStoreWindow extends JPanel implements StoreListener {
         addButton.addActionListener(e -> {
             String storeName = storeNameField.getText().trim();
             if (!storeName.isEmpty()) {
-                storeController.addStore(new Store(storeName, String.valueOf(storeController.getStoresList().size() + 1)));
+                Inventory inventory = inventoryController.addInventory(new Inventory(new ArrayList<>()));
+                storeController.addStore(new Store(storeName, String.valueOf(storeController.getStoresList().size() + 1), inventory));
                 storeNameField.setText("");
             }
         });

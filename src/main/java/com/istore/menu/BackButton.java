@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 
 public class BackButton extends MenuItem {
     private final WindowManager windowManager;
+
     public BackButton(WindowManager windowManager) {
         super("Retour");
         this.windowManager = windowManager;

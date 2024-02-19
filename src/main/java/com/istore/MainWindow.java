@@ -1,5 +1,6 @@
 package com.istore;
 
+import com.istore.inventory.InventoryController;
 import com.istore.menu.AdminMenu;
 import com.istore.menu.BackButton;
 import com.istore.menu.MenuItem;
@@ -23,6 +24,7 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
     private final JLabel userLabel;
     private User loggedInUser;
     private final StoreController storeController;
+    private InventoryController inventory;
 
 
     public MainWindow(UserController userController, StoreController storeController) {
@@ -53,7 +55,7 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
 
         updateMenuBar();
 
-        windowManager.goToWindow(new ListStoreWindow(storeController, windowManager));
+        windowManager.goToWindow(new ListStoreWindow(storeController, inventory, windowManager));
     }
 
     @Override
