@@ -36,7 +36,7 @@ public class WindowManager {
             System.out.println(historyPanels.size());
             historyPanels.remove(historyPanels.size() - 1);
             System.out.println(historyPanels.size());
-            goToWindowWithoutHistory(historyPanels.get(historyPanels.size() - 1);
+            goToWindowWithoutHistory(historyPanels.get(historyPanels.size() - 1));
         }
     }
 
