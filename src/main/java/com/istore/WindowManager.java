@@ -34,9 +34,9 @@ public class WindowManager {
     public void backToPreviousWindow() {
         if (historyPanels.size() > 2) {
             System.out.println(historyPanels.size());
-            historyPanels.removeLast();
+            historyPanels.remove(historyPanels.size() - 1);
             System.out.println(historyPanels.size());
-            goToWindowWithoutHistory(historyPanels.getLast());
+            goToWindowWithoutHistory(historyPanels.get(historyPanels.size() - 1);
         }
     }
 
