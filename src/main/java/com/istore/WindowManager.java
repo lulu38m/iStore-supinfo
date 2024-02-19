@@ -27,5 +27,4 @@ public class WindowManager {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
 }

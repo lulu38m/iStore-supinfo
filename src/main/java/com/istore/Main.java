@@ -16,6 +16,7 @@ public class Main {
     @Getter
     private static MainWindow window;
     private static UserController userController;
+    private static StoreController storeController;
 
     public static void main(String[] args) {
         WhitelistUserModel whitelistUserModel = new WhitelistUserModel();
