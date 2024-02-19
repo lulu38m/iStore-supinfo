@@ -31,7 +31,7 @@ public class ListStoreWindow extends JPanel implements StoreListener {
         for (Store store : storeController.getStoresList()) {
             JButton storeButton = new JButton(store.getName());
             storeButton.addActionListener(e -> {
-                windowManager.changeCurrentWindow(new StoreWindow(store, storeController, windowManager));
+                windowManager.goToWindow(new StoreWindow(store, storeController, windowManager));
             });
             storesPanel.add(storeButton);
         }

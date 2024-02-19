@@ -17,7 +17,7 @@ public class  StoreWindow extends JPanel {
         backButton = new JButton("Retour");
         add(backButton, BorderLayout.SOUTH);
 
-        backButton.addActionListener(e -> windowManager.changeCurrentWindow(new ListStoreWindow(storeController, windowManager)));
+        backButton.addActionListener(e -> windowManager.goToWindow(new ListStoreWindow(storeController, windowManager)));
 
     }
 }
