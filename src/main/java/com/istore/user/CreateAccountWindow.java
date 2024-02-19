@@ -67,9 +67,13 @@ public class CreateAccountWindow extends JPanel {
             return;
         }
 
-        userController.createUser(emailField.getText(), usernameField.getText(), String.valueOf(passwordField.getPassword()));
-        JOptionPane.showMessageDialog(this, "Compte créé avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            userController.createUser(emailField.getText(), usernameField.getText(), String.valueOf(passwordField.getPassword()));
+            JOptionPane.showMessageDialog(this, "Compte créé avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
 
-        parentWindow.changeWindowToLogin();
+            parentWindow.changeWindowToLogin();
+        } catch (UserEmailNotWhitelistedException e) {
+            JOptionPane.showMessageDialog(this, "L'adresse email n'est pas autorisée", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

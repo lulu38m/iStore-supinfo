@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Getter
-public class UserModel {
+public class UserModel implements UserLoginEventsSubscriber {
 
     private final List<User> usersList;
+    private final List<UserLoginEventsListener> listeners;
 
     public UserModel() {
         this.usersList = new ArrayList<>();
+        this.listeners = new ArrayList<>();
     }
 
     public void addUser(User user) {
@@ -28,4 +30,12 @@ public class UserModel {
         return usersList.add(user);
     }
 
+    public void login(User user) {
+        listeners.forEach(listener -> listener.onLogin(user));
+    }
+
+    @Override
+    public void subscribe(UserLoginEventsListener listener) {
+        listeners.add(listener);
+    }
 }
