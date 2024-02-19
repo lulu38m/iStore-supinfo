@@ -1,11 +1,13 @@
 package com.istore;
 
 import com.istore.menu.AdminMenu;
+import com.istore.menu.MenuItem;
 import com.istore.menu.UserMenu;
 import com.istore.store.ListStoreWindow;
 import com.istore.user.*;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 public class MainWindow extends JFrame implements UserLoginEventsListener {
 
@@ -46,22 +48,26 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
 
     @Override
     public void onLogout() {
-        System.out.println("Logout");
         loggedInUser = null;
         userLabel.setText("");
         windowManager.changeCurrentWindow(new LoginOrCreateWindow(userController));
+        updateMenuBar();
     }
 
     private void updateMenuBar() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu userMenu = new UserMenu(userController);
 
-        if (loggedInUser.getRole().equals(Role.ADMIN)) {
-            JMenu adminMenu = new AdminMenu();
-            menuBar.add(adminMenu);
+        if (loggedInUser != null) {
+            JMenu userMenu = new UserMenu(userController);
+
+            if (loggedInUser.getRole().equals(Role.ADMIN)) {
+                JMenu adminMenu = new AdminMenu();
+                menuBar.add(adminMenu);
+            }
+
+            menuBar.add(userMenu);
         }
 
-        menuBar.add(userMenu);
         setJMenuBar(menuBar);
     }
 }
