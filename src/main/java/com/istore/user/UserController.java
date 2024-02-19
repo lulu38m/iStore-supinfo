@@ -40,4 +40,12 @@ public class UserController {
     public User getUserByEmail(String email) {
         return userModel.getUsersList().stream().filter(user -> Objects.equals(user.getEmail(), email)).findFirst().orElse(null);
     }
+
+    public void login(User user) {
+        userModel.login(user);
+    }
+
+    public void logout() {
+        userModel.logout();
+    }
 }
