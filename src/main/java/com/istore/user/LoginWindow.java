@@ -62,6 +62,6 @@ public class LoginWindow extends JPanel {
         }
 
         JOptionPane.showMessageDialog(this, "Connexion réussie", "Succès", JOptionPane.INFORMATION_MESSAGE);
-        userController.getUserModel().login(user);
+        userController.login(user);
     }
 }
