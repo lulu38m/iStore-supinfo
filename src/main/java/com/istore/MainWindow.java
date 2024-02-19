@@ -2,16 +2,10 @@ package com.istore;
 
 import com.istore.menu.AdminMenu;
 import com.istore.menu.BackButton;
-import com.istore.menu.MenuItem;
 import com.istore.menu.UserMenu;
 import com.istore.store.ListStoreWindow;
-import com.istore.user.*;
 import com.istore.store.StoreController;
-import com.istore.store.StoreModel;
-import com.istore.user.LoginOrCreateWindow;
-import com.istore.user.User;
-import com.istore.user.UserController;
-import com.istore.user.UserLoginEventsListener;
+import com.istore.user.*;
 
 import javax.swing.*;
 
@@ -52,7 +46,7 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
 
         updateMenuBar();
 
-        windowManager.changeCurrentWindow(new ListStoreWindow(storeController, windowManager));
+        windowManager.goToWindow(new ListStoreWindow(storeController, windowManager));
         updateMenuBar();
     }
 

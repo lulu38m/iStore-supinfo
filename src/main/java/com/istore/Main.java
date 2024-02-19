@@ -26,7 +26,7 @@ public class Main {
         userController = new UserController(userModel, whitelistUserController);
 
         // Temporary data
-//        whitelistUserController.addWhitelistedEmail("bbb@bbb.fr");
+        // whitelistUserController.addWhitelistedEmail("bbb@bbb.fr");
         userModel.addUser(new User("aaa@aaa.fr", "aaa", BCrypt.hashpw("aaa", BCrypt.gensalt()), Role.USER));
         userModel.addUser(new User("ccc@ccc.fr", "ccc", BCrypt.hashpw("ccc", BCrypt.gensalt()), Role.ADMIN));
 
