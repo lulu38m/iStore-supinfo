@@ -1,6 +1,10 @@
 package com.istore;
 
+import com.istore.menu.AdminMenu;
+import com.istore.menu.MenuItem;
+import com.istore.menu.UserMenu;
 import com.istore.store.ListStoreWindow;
+import com.istore.user.*;
 import com.istore.store.StoreController;
 import com.istore.store.StoreModel;
 import com.istore.user.LoginOrCreateWindow;
@@ -9,12 +13,18 @@ import com.istore.user.UserController;
 import com.istore.user.UserLoginEventsListener;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 public class MainWindow extends JFrame implements UserLoginEventsListener {
 
     private final WindowManager windowManager;
+    private final UserController userController;
     private final JLabel userLabel;
+    private User loggedInUser;
     private final StoreController storeController;
+
+    public MainWindow(UserController userController) {
+        this.userController = userController;
 
     public MainWindow(UserController userController, StoreController storeController) {
         this.storeController = storeController;
@@ -36,9 +46,37 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
     }
     @Override
     public void onLogin(User user) {
+        loggedInUser = user;
         userLabel.setText("Hello, " + user.getPseudo() + "!");
+
+        updateMenuBar();
+
+        windowManager.changeCurrentWindow(new ListStoreWindow());
         windowManager.changeCurrentWindow(new ListStoreWindow(storeController, windowManager));
     }
+
+    @Override
+    public void onLogout() {
+        loggedInUser = null;
+        userLabel.setText("");
+        windowManager.changeCurrentWindow(new LoginOrCreateWindow(userController));
+        updateMenuBar();
+    }
+
+    private void updateMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+
+        if (loggedInUser != null) {
+            JMenu userMenu = new UserMenu(userController);
+
+            if (loggedInUser.getRole().equals(Role.ADMIN)) {
+                JMenu adminMenu = new AdminMenu();
+                menuBar.add(adminMenu);
+            }
+
+            menuBar.add(userMenu);
+        }
+
+        setJMenuBar(menuBar);
+    }
 }
-
-

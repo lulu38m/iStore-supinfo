@@ -34,6 +34,10 @@ public class UserModel implements UserLoginEventsSubscriber {
         listeners.forEach(listener -> listener.onLogin(user));
     }
 
+    public void logout() {
+        listeners.forEach(UserLoginEventsListener::onLogout);
+    }
+
     @Override
     public void subscribe(UserLoginEventsListener listener) {
         listeners.add(listener);
