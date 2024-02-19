@@ -11,9 +11,6 @@ public class ListStoreWindow extends JPanel {
     private void initializeWindow() {
         JLabel label = new JLabel("Liste des magasins");
         add(label);
-
-
-
     }
 
 }
