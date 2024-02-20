@@ -23,6 +23,7 @@ public class UserController {
         return user.getEmail().equals(email) && BCrypt.checkpw(password, user.getPasswordHash());
     }
 
+
     public boolean isPseudoAvailable(String username) {
         return userModel.getUsersList().stream().noneMatch(user -> Objects.equals(user.getPseudo(), username));
     }
@@ -39,7 +40,7 @@ public class UserController {
     }
 
     public User getUserByEmail(String email) {
-        return userModel.getUsersList().stream().filter(user -> Objects.equals(user.getEmail(), email)).findFirst().orElse(null);
+        return userModel.getUserByEmail(email);
     }
 
     public void login(User user) {
@@ -50,3 +51,4 @@ public class UserController {
         userModel.logout();
     }
 }
+

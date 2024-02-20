@@ -28,6 +28,8 @@ public class Main {
 
         window = new MainWindow(userController);
         window.setVisible(true);
+
+
     }
 
 }
