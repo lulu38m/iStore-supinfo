@@ -26,7 +26,8 @@ public class UserModel implements UserLoginEventsSubscriber {
     }
 
     public boolean updateUser(User user) {
-        usersList.removeIf(u -> u.getEmail().equals(user.getEmail()));
+        usersList.removeIf(u -> u.getId().equals(user.getId()));
+        listeners.forEach(listener -> listener.onUpdate(user));
         return usersList.add(user);
     }
 

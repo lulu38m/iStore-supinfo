@@ -49,7 +49,17 @@ public class UserController {
         return userModel.getUsersList().stream().filter(user -> Objects.equals(user.getEmail(), email)).findFirst().orElse(null);
     }
 
-    public void updateUser(User user) {
+    public void updateUser(User user) throws IllegalArgumentException {
+        // Check if the email or pseudo are already taken by another user.
+        // If we just change the user's role, the email and pseudo will remain the same.
+        if (userModel.getUsersList().stream().anyMatch(u -> !u.getId().equals(user.getId()) && u.getEmail().equals(user.getEmail()))) {
+            throw new IllegalArgumentException("Email already taken");
+        }
+
+        if (userModel.getUsersList().stream().anyMatch(u -> !u.getId().equals(user.getId()) && u.getPseudo().equals(user.getPseudo()))) {
+            throw new IllegalArgumentException("Pseudo already taken");
+        }
+
         userModel.updateUser(user);
     }
 
