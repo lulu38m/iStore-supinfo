@@ -1,15 +1,10 @@
 package com.istore;
 
-import com.istore.user.*;
 import com.istore.store.Store;
 import com.istore.store.StoreController;
 import com.istore.store.StoreModel;
-import com.istore.user.Role;
-import com.istore.user.User;
-import com.istore.user.UserController;
-import com.istore.user.UserModel;
+import com.istore.user.*;
 import lombok.Getter;
-import org.mindrot.jbcrypt.BCrypt;
 
 public class Main {
 
@@ -25,10 +20,15 @@ public class Main {
         UserModel userModel = new UserModel();
         userController = new UserController(userModel, whitelistUserController);
 
-        // Temporary data
-        // whitelistUserController.addWhitelistedEmail("bbb@bbb.fr");
-        userModel.addUser(new User("aaa@aaa.fr", "aaa", BCrypt.hashpw("aaa", BCrypt.gensalt()), Role.USER));
-        userModel.addUser(new User("ccc@ccc.fr", "ccc", BCrypt.hashpw("ccc", BCrypt.gensalt()), Role.ADMIN));
+        whitelistUserController.addWhitelistedEmail("aaa@aaa.fr");
+        whitelistUserController.addWhitelistedEmail("bbb@bbb.fr");
+
+        try {
+            userController.createUser("aaa@aaa.fr", "aaa", "aaa");
+            userController.createUser("bbb@bbb.fr", "bbb", "bbb");
+        } catch (UserEmailNotWhitelistedException e) {
+            e.printStackTrace();
+        }
 
         StoreModel storeModel = new StoreModel();
         storeModel.addStore(new Store("Magasin 1", "1"));

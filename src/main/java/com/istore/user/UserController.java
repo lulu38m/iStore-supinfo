@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class UserController {
@@ -34,11 +35,22 @@ public class UserController {
         if (!whitelistUserController.containsWhitelistedEmail(email)) {
             throw new UserEmailNotWhitelistedException(email);
         }
-        this.userModel.addUser(new User(email, username, BCrypt.hashpw(password, BCrypt.gensalt()), Role.USER));
+
+        Role userRole = Role.USER;
+
+        if (userModel.getUsersList().isEmpty()) {
+            userRole = Role.ADMIN;
+        }
+
+        this.userModel.addUser(new User(UUID.randomUUID(), email, username, BCrypt.hashpw(password, BCrypt.gensalt()), userRole));
     }
 
     public User getUserByEmail(String email) {
         return userModel.getUsersList().stream().filter(user -> Objects.equals(user.getEmail(), email)).findFirst().orElse(null);
+    }
+
+    public void updateUser(User user) {
+        userModel.updateUser(user);
     }
 
     public void login(User user) {
