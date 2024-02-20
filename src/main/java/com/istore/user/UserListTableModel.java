@@ -29,25 +29,35 @@ public class UserListTableModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int col) {
-        return switch (col) {
-            case 0 -> "ID";
-            case 1 -> "Pseudo";
-            case 2 -> "Email";
-            case 3 -> "Role";
-            default -> "";
-        };
+        switch (col) {
+            case 0:
+                return "ID";
+            case 1:
+                return "Pseudo";
+            case 2:
+                return "Email";
+            case 3:
+                return "Role";
+            default:
+                return "";
+        }
     }
 
     @Override
     public Object getValueAt(int row, int col) {
         User user = users.get(row);
-        return switch (col) {
-            case 0 -> user.getId().toString();
-            case 1 -> user.getPseudo();
-            case 2 -> user.getEmail();
-            case 3 -> user.getRole().toString();
-            default -> "";
-        };
+        switch (col) {
+            case 0:
+                return user.getId().toString();
+            case 1:
+                return user.getPseudo();
+            case 2:
+                return user.getEmail();
+            case 3:
+                return user.getRole().toString();
+            default:
+                return "";
+        }
     }
 
     @Override
@@ -59,14 +69,19 @@ public class UserListTableModel extends AbstractTableModel {
         Role originalRole = user.getRole();
 
         switch (columnIndex) {
-            case 1 -> user.setPseudo((String) aValue);
-            case 2 -> user.setEmail((String) aValue);
-            case 3 -> user.setRole((Role) aValue);
+            case 1:
+                user.setPseudo((String) aValue);
+                break;
+            case 2:
+                user.setEmail((String) aValue);
+                break;
+            case 3:
+                user.setRole((Role) aValue);
+                break;
         }
 
         try {
             userController.updateUser(user);
-            System.out.println("User updated");
         } catch (IllegalArgumentException e) {
             // Show error message and revert the change
 
