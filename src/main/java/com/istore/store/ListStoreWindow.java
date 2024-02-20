@@ -56,7 +56,7 @@ public class ListStoreWindow extends JPanel implements StoreListener {
         addButton.addActionListener(e -> {
             String storeName = storeNameField.getText().trim();
             if (!storeName.isEmpty()) {
-                Inventory inventory = inventoryController.addInventory(new Inventory(new ArrayList<>()));
+                Inventory inventory = new Inventory(new ArrayList<>());
                 storeController.addStore(new Store(storeName, String.valueOf(storeController.getStoresList().size() + 1), inventory));
                 storeNameField.setText("");
             }

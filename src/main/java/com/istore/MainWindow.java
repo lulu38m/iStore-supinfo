@@ -1,21 +1,19 @@
 package com.istore;
 
+import com.istore.inventory.Inventory;
 import com.istore.inventory.InventoryController;
 import com.istore.menu.AdminMenu;
 import com.istore.menu.BackButton;
-import com.istore.menu.MenuItem;
 import com.istore.menu.UserMenu;
 import com.istore.store.ListStoreWindow;
 import com.istore.user.*;
 import com.istore.store.StoreController;
-import com.istore.store.StoreModel;
 import com.istore.user.LoginOrCreateWindow;
 import com.istore.user.User;
 import com.istore.user.UserController;
 import com.istore.user.UserLoginEventsListener;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 
 public class MainWindow extends JFrame implements UserLoginEventsListener {
 
@@ -25,10 +23,10 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
     private User loggedInUser;
     private final StoreController storeController;
     private InventoryController inventory;
-    private User loggedInUser;
 
 
-    public MainWindow(UserController userController, StoreController storeController) {
+
+    public MainWindow(UserController userController, StoreController storeController, Inventory inventory) {
         this.storeController = storeController;
 
         JPanel windowPanel = new JPanel();

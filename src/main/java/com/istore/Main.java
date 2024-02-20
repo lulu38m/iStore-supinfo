@@ -1,5 +1,6 @@
 package com.istore;
 
+import com.istore.database.DbTools;
 import com.istore.inventory.Inventory;
 import com.istore.inventory.Item;
 import com.istore.inventory.ItemModel;
@@ -33,10 +34,10 @@ public class Main {
         UserModel userModel = new UserModel(dbTools);
         userController = new UserController(userModel, whitelistUserController);
 
-        // Temporary data
-//        whitelistUserController.addWhitelistedEmail("bbb@bbb.fr");
-        userModel.addUser(new User("aaa@aaa.fr", "aaa", BCrypt.hashpw("aaa", BCrypt.gensalt()), Role.USER));
-        userModel.addUser(new User("ccc@ccc.fr", "ccc", BCrypt.hashpw("ccc", BCrypt.gensalt()), Role.ADMIN));
+//        // Temporary data
+////        whitelistUserController.addWhitelistedEmail("bbb@bbb.fr");
+//        userModel.addUser(new User("aaa@aaa.fr", "aaa", BCrypt.hashpw("aaa", BCrypt.gensalt()), Role.USER));
+//        userModel.addUser(new User("ccc@ccc.fr", "ccc", BCrypt.hashpw("ccc", BCrypt.gensalt()), Role.ADMIN));
 
 
         ItemModel itemModel = new ItemModel();
@@ -54,7 +55,7 @@ public class Main {
         storeModel.addStore(new Store("Magasin 2", "2", inventory2));
 
         storeController = new StoreController(storeModel);
-        window = new MainWindow(userController, storeController);
+        window = new MainWindow(userController, storeController, inventory);
         window.setVisible(true);
     }
 
