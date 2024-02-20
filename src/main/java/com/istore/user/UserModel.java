@@ -76,6 +76,18 @@ public class UserModel implements UserLoginEventsSubscriber {
         return Optional.empty();
     }
 
+    public void removeUser(User user) {
+        String sql = "DELETE FROM \"USER\" WHERE id = ?";
+        try (Connection connection = DbTools.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user.getId().toString());
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     public void login(User user) {
         listeners.forEach(listener -> listener.onLogin(user));
     }
@@ -107,6 +119,8 @@ public class UserModel implements UserLoginEventsSubscriber {
 
         return usersList;
     }
+
+
 
 
     @Override
