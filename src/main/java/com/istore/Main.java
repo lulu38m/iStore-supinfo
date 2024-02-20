@@ -21,7 +21,7 @@ public class Main {
         DbTools dbTools = new DbTools();
         dbTools.initDatabase();
 
-        WhitelistUserModel whitelistUserModel = new WhitelistUserModel();
+        WhitelistUserModel whitelistUserModel = new WhitelistUserModel(dbTools);
         WhitelistUserController whitelistUserController = new WhitelistUserController(whitelistUserModel);
 
         UserModel userModel = new UserModel(dbTools);

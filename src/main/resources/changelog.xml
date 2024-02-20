@@ -25,8 +25,8 @@
         </createTable>
     </changeSet>
     <changeSet id="2" author="titi">
-        <createTable tableName="whitelist_user">
-            <column name="id" type="int" autoIncrement="true">
+        <createTable tableName="WHITELISTED_EMAIL">
+            <column name="id" type="varchar(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="email" type="varchar(255)">
