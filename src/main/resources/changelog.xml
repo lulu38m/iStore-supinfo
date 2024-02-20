@@ -35,4 +35,57 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="4" author="titi">
+        <createTable tableName="INVENTORY">
+            <column name="id" type="varchar(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="titi">
+        <createTable tableName="STORE">
+            <column name="id" type="varchar(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="inventory_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint  baseColumnNames="inventory_id"
+                                  baseTableName="STORE"
+                                  constraintName="fk_store_inventory"
+                                  referencedColumnNames="id"
+                                  referencedTableName="INVENTORY"/>
+    </changeSet>
+
+    <changeSet id="5" author="titi">
+        <createTable tableName="ITEM">
+            <column name="id" type="varchar(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="inventory_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint  baseColumnNames="inventory_id"
+                                  baseTableName="ITEM"
+                                  constraintName="fk_item_inventory"
+                                  referencedColumnNames="id"
+                                  referencedTableName="INVENTORY"/>
+    </changeSet>
+
 </databaseChangeLog>
+

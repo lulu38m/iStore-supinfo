@@ -12,4 +12,5 @@ public class Store {
     private final String name;
     private final String id;
     private final Inventory inventory;
+
 }

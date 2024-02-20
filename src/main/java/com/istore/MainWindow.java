@@ -22,12 +22,13 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
     private final JLabel userLabel;
     private User loggedInUser;
     private final StoreController storeController;
-    private InventoryController inventory;
+    private InventoryController inventoryController;
 
 
 
-    public MainWindow(UserController userController, StoreController storeController, Inventory inventory) {
+    public MainWindow(UserController userController, StoreController storeController, InventoryController inventoryController) {
         this.storeController = storeController;
+        this.inventoryController = inventoryController;
 
         JPanel windowPanel = new JPanel();
         windowPanel.setLayout(new BoxLayout(windowPanel, BoxLayout.Y_AXIS));
@@ -54,7 +55,7 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
 
         updateMenuBar();
 
-        windowManager.goToWindow(new ListStoreWindow(storeController, inventory, windowManager, loggedInUser));
+        windowManager.goToWindow(new ListStoreWindow(storeController, inventoryController, windowManager, loggedInUser));
     }
 
     @Override
