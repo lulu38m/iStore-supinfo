@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DbTools {
-    private static String url = "jdbc:h2:file:./build/istore;AUTO_SERVER=true";
+    private static String url = "jdbc:h2:file:./db/istore;AUTO_SERVER=true";
     private static String user = "sa";
     private static String passwd = "";
 
