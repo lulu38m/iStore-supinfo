@@ -1,7 +1,5 @@
 package com.istore.user;
 
-import com.istore.Main;
-
 import javax.swing.*;
 
 public class CreateAccountWindow extends JPanel {
@@ -10,7 +8,7 @@ public class CreateAccountWindow extends JPanel {
     private JTextField emailField;
     private JPasswordField passwordField;
     private JButton registerButton;
-    private LoginOrCreateWindow parentWindow;
+    private final LoginOrCreateWindow parentWindow;
 
     public CreateAccountWindow(UserController userController, LoginOrCreateWindow parentWindow) {
         this.userController = userController;

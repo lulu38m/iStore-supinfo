@@ -11,4 +11,11 @@ public class StoreModel {
         this.storesList = new ArrayList<>();
     }
 
+    public void addStore(Store store){
+        this.storesList.add(store);
+    }
+
+    public List<Store> getStoresList() {
+        return storesList;
+    }
 }

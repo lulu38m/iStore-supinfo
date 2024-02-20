@@ -2,7 +2,7 @@ package com.istore.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.mindrot.jbcrypt.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Objects;
 import java.util.UUID;

@@ -1,6 +1,5 @@
 package com.istore.menu;
 
-import com.istore.user.LoginOrCreateWindow;
 import com.istore.user.UserController;
 
 import javax.swing.*;
