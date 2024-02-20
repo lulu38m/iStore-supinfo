@@ -1,10 +1,16 @@
 package com.istore.user;
 
+import com.istore.user.exceptions.UserEmailAlreadyTakenException;
+import com.istore.user.exceptions.UserEmailNotValidException;
+import com.istore.user.exceptions.UserEmailNotWhitelistedException;
+import com.istore.user.exceptions.UserPseudoAlreadyTakenException;
+import com.istore.utils.EmailValidator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -13,11 +19,6 @@ public class UserController {
     @Getter
     private final UserModel userModel;
     private final WhitelistUserController whitelistUserController;
-
-    public boolean validateEmail(String email) {
-        return email.matches("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
-    }
 
     public boolean checkUserLogins(User user, String email, String password) {
         return user.getEmail().equals(email) && BCrypt.checkpw(password, user.getPasswordHash());
@@ -31,9 +32,21 @@ public class UserController {
         return userModel.getUsersList().stream().noneMatch(user -> Objects.equals(user.getEmail(), email));
     }
 
-    public void createUser(String email, String username, String password) throws UserEmailNotWhitelistedException {
+    public void createUser(String email, String username, String password) throws UserEmailNotWhitelistedException, UserPseudoAlreadyTakenException, UserEmailNotValidException, UserEmailAlreadyTakenException {
         if (!whitelistUserController.containsWhitelistedEmail(email)) {
             throw new UserEmailNotWhitelistedException(email);
+        }
+
+        if (!isPseudoAvailable(username)) {
+            throw new UserPseudoAlreadyTakenException(username);
+        }
+
+        if (!isEmailAvailable(email)) {
+            throw new UserEmailAlreadyTakenException(email);
+        }
+
+        if (!EmailValidator.isValid(email)) {
+            throw new UserEmailNotValidException(email);
         }
 
         Role userRole = Role.USER;
@@ -45,7 +58,7 @@ public class UserController {
         this.userModel.addUser(new User(UUID.randomUUID(), email, username, BCrypt.hashpw(password, BCrypt.gensalt()), userRole));
     }
 
-    public User getUserByEmail(String email) {
+    public Optional<User> getUserByEmail(String email) {
         return userModel.getUserByEmail(email);
     }
 

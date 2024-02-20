@@ -8,30 +8,28 @@ import com.istore.user.UserController;
 import com.istore.user.UserModel;
 import com.istore.user.WhitelistUserController;
 import com.istore.user.WhitelistUserModel;
-import lombok.Getter;
+
+import java.awt.*;
 
 public class Main {
-
-    @Getter
-    private static MainWindow window;
-    private static UserController userController;
-    private static StoreController storeController;
 
     public static void main(String[] args) {
         DbTools dbTools = new DbTools();
         dbTools.initDatabase();
 
-        WhitelistUserModel whitelistUserModel = new WhitelistUserModel();
-        WhitelistUserController whitelistUserController = new WhitelistUserController(whitelistUserModel);
-
         UserModel userModel = new UserModel(dbTools);
-        userController = new UserController(userModel, whitelistUserController);
 
+        WhitelistUserModel whitelistUserModel = new WhitelistUserModel();
+        WhitelistUserController whitelistUserController = new WhitelistUserController(whitelistUserModel, userModel);
+
+        UserController userController = new UserController(userModel, whitelistUserController);
+        
         StoreModel storeModel = new StoreModel();
         storeModel.addStore(new Store("Magasin 1", "1"));
         storeModel.addStore(new Store("Magasin 2", "2"));
-        storeController = new StoreController(storeModel);
-        window = new MainWindow(userController, storeController);
+        StoreController storeController = new StoreController(storeModel);
+
+        Window window = new MainWindow(userController, whitelistUserController, storeController);
         window.setVisible(true);
     }
 

@@ -5,26 +5,26 @@ import java.util.List;
 
 public class WhitelistUserModel {
 
-    private final List<String> whitelistedEmails;
+    private final List<Whitelist> whitelistedEmails;
 
     public WhitelistUserModel() {
         this.whitelistedEmails = new ArrayList<>();
     }
 
-    public void addWhitelistedEmail(String email) {
-        this.whitelistedEmails.add(email);
+    public void AddWhitelist(Whitelist whitelist) {
+        this.whitelistedEmails.add(whitelist);
     }
 
-    public List<String> getWhitelistedEmails() {
+    public boolean hasWhitelistedEmail(String email) {
+        return this.whitelistedEmails.stream().anyMatch(whitelist -> whitelist.getEmail().equals(email));
+    }
+
+    public List<Whitelist> listWhitelists() {
         return this.whitelistedEmails;
     }
 
-    public void removeWhitelistedEmail(String email) {
-        this.whitelistedEmails.remove(email);
-    }
-
-    public void clearWhitelistedEmails() {
-        this.whitelistedEmails.clear();
+    public void removeWhitelist(Whitelist whitelist) {
+        this.whitelistedEmails.remove(whitelist);
     }
 
 }

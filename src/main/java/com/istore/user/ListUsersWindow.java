@@ -12,6 +12,7 @@ public class ListUsersWindow extends JPanel {
     public ListUsersWindow(UserController userController, User loggedInUser) {
         this.userController = userController;
         this.userListTableModel = new UserListTableModel(userController, loggedInUser);
+        userListTableModel.addUsers(userController.getUserModel().getUsersList());
         this.initializeWindow();
     }
 
@@ -23,12 +24,11 @@ public class ListUsersWindow extends JPanel {
         TableColumn col = table.getColumnModel().getColumn(3);
         col.setCellEditor(new DefaultCellEditor(new JComboBox<>(Role.values())));
 
-        panel.add(new JScrollPane(table), BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setPreferredSize(new Dimension(575, 250));
 
-        for (User user : userController.getUserModel().getUsersList()) {
-            userListTableModel.addUser(user);
-        }
-
+        panel.add(scrollPane, BorderLayout.CENTER);
         add(panel);
     }
 

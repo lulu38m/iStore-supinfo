@@ -1,6 +1,8 @@
-package com.istore.user;
+package com.istore.user.exceptions;
 
-public class UserNotAdminException extends Exception {
+import com.istore.user.User;
+
+public class UserNotAdminException extends RuntimeException {
 
     public UserNotAdminException(User operator) {
         super("User " + operator.getEmail() + " is not an admin");

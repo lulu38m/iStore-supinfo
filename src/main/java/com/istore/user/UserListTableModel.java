@@ -100,13 +100,7 @@ public class UserListTableModel extends AbstractTableModel {
         return columnIndex != 0 && loggedInUser.getRole().equals(Role.ADMIN);
     }
 
-    public void addUser(User user) {
-        this.users.add(user);
-
-        fireTableDataChanged();
-    }
-
-    public void addUser(List<User> userList) {
+    public void addUsers(List<User> userList) {
         this.users.addAll(userList);
         this.fireTableDataChanged();
     }

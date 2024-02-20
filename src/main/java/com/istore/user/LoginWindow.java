@@ -2,6 +2,7 @@ package com.istore.user;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Optional;
 
 public class LoginWindow extends JPanel {
     private final UserController userController;
@@ -49,19 +50,19 @@ public class LoginWindow extends JPanel {
             return;
         }
 
-        User user = userController.getUserByEmail(emailField.getText());
-        if (user == null) {
+        Optional<User> user = userController.getUserByEmail(emailField.getText());
+        if (user.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Nom d'utilisateur ou mot de passe incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        boolean isPasswordCorrect = userController.checkUserLogins(user, emailField.getText(), String.valueOf(passwordField.getPassword()));
+        boolean isPasswordCorrect = userController.checkUserLogins(user.get(), emailField.getText(), String.valueOf(passwordField.getPassword()));
         if (!isPasswordCorrect) {
             JOptionPane.showMessageDialog(this, "Nom d'utilisateur ou mot de passe incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         JOptionPane.showMessageDialog(this, "Connexion réussie", "Succès", JOptionPane.INFORMATION_MESSAGE);
-        userController.login(user);
+        userController.login(user.get());
     }
 }

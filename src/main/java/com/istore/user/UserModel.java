@@ -6,6 +6,7 @@ import lombok.Getter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Getter
@@ -50,7 +51,7 @@ public class UserModel implements UserLoginEventsSubscriber {
         }
     }
 
-    public User getUserByEmail(String email) {
+    public Optional<User> getUserByEmail(String email) {
         String sql = "SELECT * FROM \"USER\" WHERE email = ?";
         try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -65,14 +66,14 @@ public class UserModel implements UserLoginEventsSubscriber {
                 User user = new User(UUID.fromString(id), email, pseudo, password, Role.valueOf(role));
                 listeners.forEach(listener -> listener.onUpdate(user));
 
-                return user;
+                return Optional.of(user);
             }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
 
-        return null;
+        return Optional.empty();
     }
 
     public void login(User user) {
