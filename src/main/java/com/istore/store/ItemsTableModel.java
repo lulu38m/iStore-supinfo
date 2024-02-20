@@ -62,12 +62,16 @@ public class ItemsTableModel extends AbstractTableModel {
         Item item = itemsList.get(rowIndex);
 
         switch (columnIndex) {
-            case 0 -> item.setName((String) aValue);
-            case 1 -> item.setPrice(Integer.parseInt((String) aValue));
-            case 2 -> {
+            case 0:
+                item.setName((String) aValue);
+                break;
+            case 1:
+                item.setPrice(Integer.parseInt((String) aValue));
+                break;
+            case 2:
                 int newQuantity = Integer.parseInt((String) aValue);
                 item.setQuantity(newQuantity > 0 ? newQuantity : 1);
-            }
+                break;
         }
         fireTableCellUpdated(rowIndex, columnIndex);
     }
