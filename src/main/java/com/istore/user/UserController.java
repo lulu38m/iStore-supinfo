@@ -23,7 +23,6 @@ public class UserController {
         return user.getEmail().equals(email) && BCrypt.checkpw(password, user.getPasswordHash());
     }
 
-
     public boolean isPseudoAvailable(String username) {
         return userModel.getUsersList().stream().noneMatch(user -> Objects.equals(user.getPseudo(), username));
     }
@@ -36,11 +35,32 @@ public class UserController {
         if (!whitelistUserController.containsWhitelistedEmail(email)) {
             throw new UserEmailNotWhitelistedException(email);
         }
-        this.userModel.addUser(new User(UUID.randomUUID(), email, username, BCrypt.hashpw(password, BCrypt.gensalt()), Role.USER));
+
+        Role userRole = Role.USER;
+
+        if (userModel.getUsersList().isEmpty()) {
+            userRole = Role.ADMIN;
+        }
+
+        this.userModel.addUser(new User(UUID.randomUUID(), email, username, BCrypt.hashpw(password, BCrypt.gensalt()), userRole));
     }
 
     public User getUserByEmail(String email) {
         return userModel.getUserByEmail(email);
+    }
+
+    public void updateUser(User user) throws IllegalArgumentException {
+        // Check if the email or pseudo are already taken by another user.
+        // If we just change the user's role, the email and pseudo will remain the same.
+        if (userModel.getUsersList().stream().anyMatch(u -> !u.getId().equals(user.getId()) && u.getEmail().equals(user.getEmail()))) {
+            throw new IllegalArgumentException("Email already taken");
+        }
+
+        if (userModel.getUsersList().stream().anyMatch(u -> !u.getId().equals(user.getId()) && u.getPseudo().equals(user.getPseudo()))) {
+            throw new IllegalArgumentException("Pseudo already taken");
+        }
+
+        userModel.updateUser(user);
     }
 
     public void login(User user) {

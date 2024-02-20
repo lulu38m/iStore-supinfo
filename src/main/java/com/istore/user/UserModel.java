@@ -68,6 +68,8 @@ public class UserModel implements UserLoginEventsSubscriber {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+
+        listeners.forEach(listener -> listener.onUpdate(user));
         return null;
     }
 

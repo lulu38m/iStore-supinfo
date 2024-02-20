@@ -58,6 +58,16 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
         updateMenuBar();
     }
 
+    @Override
+    public void onUpdate(User newUser) {
+        // Update the logged in user if it's the same user
+        if (loggedInUser != null && loggedInUser.getId().equals(newUser.getId())) {
+            loggedInUser = newUser;
+            userLabel.setText("Hello, " + newUser.getPseudo() + "!");
+            updateMenuBar();
+        }
+    }
+
     private void updateMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
@@ -65,7 +75,7 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
             setJMenuBar(menuBar);
             return;
         }
-        JMenu userMenu = new UserMenu(userController);
+        JMenu userMenu = new UserMenu(userController, loggedInUser, windowManager);
 
         if (loggedInUser.getRole().equals(Role.ADMIN)) {
             JMenu adminMenu = new AdminMenu();
@@ -78,5 +88,6 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
         menuBar.add(backButton);
 
         setJMenuBar(menuBar);
+        menuBar.updateUI();
     }
 }

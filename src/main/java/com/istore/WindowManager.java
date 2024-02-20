@@ -40,7 +40,7 @@ public class WindowManager {
 
     public void initializeWindow() {
         frame.setTitle("iStore");
-        frame.setSize(400, 300);
+        frame.setSize(600, 300);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

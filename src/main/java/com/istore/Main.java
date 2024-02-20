@@ -5,12 +5,8 @@ import com.istore.user.*;
 import com.istore.store.Store;
 import com.istore.store.StoreController;
 import com.istore.store.StoreModel;
-import com.istore.user.Role;
-import com.istore.user.User;
-import com.istore.user.UserController;
-import com.istore.user.UserModel;
+import com.istore.user.*;
 import lombok.Getter;
-import org.mindrot.jbcrypt.BCrypt;
 
 public class Main {
 
