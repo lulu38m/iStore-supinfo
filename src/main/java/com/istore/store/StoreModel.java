@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,5 +60,17 @@ public class StoreModel {
         }
     }
 
+
+    public void removeStore(Store createdStore) {
+        String sql = "DELETE FROM \"STORE\" WHERE id = ?";
+        try (Connection connection = DbTools.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, createdStore.getId());
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 
 }
