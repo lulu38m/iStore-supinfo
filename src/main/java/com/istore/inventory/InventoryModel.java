@@ -17,4 +17,5 @@ public class InventoryModel {
     public void removeInventory(Inventory item) {
         this.inventoryList.remove(item);
     }
+
 }

@@ -62,7 +62,7 @@ public class UserModel implements UserLoginEventsSubscriber {
                 String password = rs.getString("password");
                 String role = rs.getString("role");
 
-                User user = new User(UUID.fromString(id), email, pseudo, password, Role.valueOf(role));
+                User user = new User(UUID.fromString(id), email, pseudo, password, Role.valueOf(role), new ArrayList<>());
                 listeners.forEach(listener -> listener.onUpdate(user));
 
                 return user;

@@ -1,5 +1,7 @@
 package com.istore.user;
 
+import com.istore.store.StoreController;
+
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import java.awt.*;
@@ -9,9 +11,13 @@ public class ListUsersWindow extends JPanel {
     private final UserController userController;
     private final UserListTableModel userListTableModel;
 
-    public ListUsersWindow(UserController userController, User loggedInUser) {
+    private final StoreController storeController;
+
+
+    public ListUsersWindow(UserController userController, User loggedInUser, StoreController storeController) {
         this.userController = userController;
-        this.userListTableModel = new UserListTableModel(userController, loggedInUser);
+        this.storeController = storeController;
+        this.userListTableModel = new UserListTableModel(userController, storeController, loggedInUser);
         this.initializeWindow();
     }
 
@@ -22,6 +28,9 @@ public class ListUsersWindow extends JPanel {
 
         TableColumn col = table.getColumnModel().getColumn(3);
         col.setCellEditor(new DefaultCellEditor(new JComboBox<>(Role.values())));
+
+        TableColumn storeCol = table.getColumnModel().getColumn(4);
+        storeCol.setCellEditor(new DefaultCellEditor(new JComboBox<>(storeController.getStoresList().toArray())));
 
         panel.add(new JScrollPane(table), BorderLayout.CENTER);
 

@@ -2,6 +2,7 @@ package com.istore;
 
 import com.istore.database.DbTools;
 import com.istore.inventory.Inventory;
+import com.istore.inventory.InventoryController;
 import com.istore.inventory.Item;
 import com.istore.inventory.ItemModel;
 import com.istore.user.*;

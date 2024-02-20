@@ -1,24 +1,31 @@
 package com.istore.user;
 
+import com.istore.store.Store;
+import com.istore.store.StoreController;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class UserListTableModel extends AbstractTableModel {
 
     private final List<User> users = new ArrayList<>();
     private final UserController userController;
+    private final StoreController storeController;
     private final User loggedInUser;
 
-    public UserListTableModel(UserController userController, User loggedInUser) {
+    public UserListTableModel(UserController userController,StoreController storeController, User loggedInUser) {
         this.userController = userController;
         this.loggedInUser = loggedInUser;
+        this.storeController = storeController;
     }
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -38,6 +45,8 @@ public class UserListTableModel extends AbstractTableModel {
                 return "Email";
             case 3:
                 return "Role";
+            case 4:
+                return "Stores";
             default:
                 return "";
         }
@@ -55,6 +64,8 @@ public class UserListTableModel extends AbstractTableModel {
                 return user.getEmail();
             case 3:
                 return user.getRole().toString();
+                case 4:
+                    return user.getStores().stream().map(Store::getName).collect(Collectors.joining(", "));
             default:
                 return "";
         }
@@ -77,6 +88,9 @@ public class UserListTableModel extends AbstractTableModel {
                 break;
             case 3:
                 user.setRole((Role) aValue);
+                break;
+            case 4:
+                user.setStores((List<Store>) aValue);
                 break;
         }
 
