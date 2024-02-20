@@ -24,7 +24,6 @@ public class AdminMenu extends JMenu {
         this.loggedInUser = loggedInUser;
 
         add(new AdminMenuWhitelistUserButton());
-        add(new AdminMenuAddShopButton());
     }
 
     private class AdminMenuWhitelistUserButton extends MenuItem {
@@ -35,17 +34,6 @@ public class AdminMenu extends JMenu {
         @Override
         public void onClick(ActionEvent e) {
             windowManager.goToWindow(new WhitelistUserWindow(whitelistUserController, loggedInUser));
-        }
-    }
-
-    private class AdminMenuAddShopButton extends MenuItem {
-        public AdminMenuAddShopButton() {
-            super("Add a shop");
-        }
-
-        @Override
-        public void onClick(ActionEvent e) {
-            System.out.println("Add a shop");
         }
     }
 

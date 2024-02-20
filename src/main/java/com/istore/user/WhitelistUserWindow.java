@@ -30,7 +30,11 @@ public class WhitelistUserWindow extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int modelRow = Integer.parseInt(e.getActionCommand());
                 Whitelist removedWhitelist = whitelistedUserListTableModel.removeWhitelist(modelRow);
-                whitelistUserController.removeWhitelistedEmail(removedWhitelist);
+                try {
+                    whitelistUserController.removeWhitelistedEmail(removedWhitelist.getEmail());
+                } catch (RuntimeException ex) {
+                    JOptionPane.showMessageDialog(WhitelistUserWindow.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }, 2);
 

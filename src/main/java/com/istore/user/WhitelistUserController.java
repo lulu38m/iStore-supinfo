@@ -38,19 +38,19 @@ public class WhitelistUserController {
         }
 
         Whitelist whitelist = new Whitelist(UUID.randomUUID(), email);
-        whitelistUserModel.AddWhitelist(whitelist);
+        whitelistUserModel.addWhitelistedEmail(whitelist);
         return whitelist;
     }
 
     public boolean containsWhitelistedEmail(String email) {
-        return whitelistUserModel.listWhitelists().stream().anyMatch(whitelist -> whitelist.getEmail().equals(email));
+        return whitelistUserModel.hasWhitelistedEmail(email);
     }
 
-    public void removeWhitelistedEmail(Whitelist whitelist) {
-        whitelistUserModel.removeWhitelist(whitelist);
+    public void removeWhitelistedEmail(String email) {
+        whitelistUserModel.removeWhitelistedEmail(email);
     }
 
     public List<Whitelist> listWhitelists() {
-        return whitelistUserModel.listWhitelists();
+        return whitelistUserModel.getWhitelistedEmails();
     }
 }

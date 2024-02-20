@@ -32,7 +32,7 @@ public class UserController {
         return userModel.getUsersList().stream().noneMatch(user -> Objects.equals(user.getEmail(), email));
     }
 
-    public void createUser(String email, String username, String password) throws UserEmailNotWhitelistedException, UserPseudoAlreadyTakenException, UserEmailNotValidException, UserEmailAlreadyTakenException {
+    public void createUser(String email, String username, String password) throws RuntimeException {
         if (!whitelistUserController.containsWhitelistedEmail(email)) {
             throw new UserEmailNotWhitelistedException(email);
         }
@@ -55,7 +55,9 @@ public class UserController {
             userRole = Role.ADMIN;
         }
 
-        this.userModel.addUser(new User(UUID.randomUUID(), email, username, BCrypt.hashpw(password, BCrypt.gensalt()), userRole));
+        whitelistUserController.removeWhitelistedEmail(email);
+
+        userModel.addUser(new User(UUID.randomUUID(), email, username, BCrypt.hashpw(password, BCrypt.gensalt()), userRole));
     }
 
     public Optional<User> getUserByEmail(String email) {
