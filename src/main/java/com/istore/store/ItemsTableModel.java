@@ -1,17 +1,22 @@
 package com.istore.store;
 
 import com.istore.inventory.Item;
+import com.istore.user.User;
+import com.istore.user.Role;
+import lombok.Getter;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-
 public class ItemsTableModel extends AbstractTableModel {
-    public ItemsTableModel(List<Item> itemsList) {
-        this.itemsList = itemsList;
-    }
-
     private final List<Item> itemsList;
+
+    private final User loggedinUser;
+
+    public ItemsTableModel(List<Item> itemsList, User loggedinUser) {
+        this.itemsList = itemsList;
+        this.loggedinUser = loggedinUser;
+    }
 
     @Override
     public String getColumnName(int column) {
@@ -53,16 +58,27 @@ public class ItemsTableModel extends AbstractTableModel {
     }
 
     @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Item item = itemsList.get(rowIndex);
+
+        switch (columnIndex) {
+            case 0 -> item.setName((String) aValue);
+            case 1 -> item.setPrice(Integer.parseInt((String) aValue));
+            case 2 -> {
+                int newQuantity = Integer.parseInt((String) aValue);
+                item.setQuantity(newQuantity > 0 ? newQuantity : 1);
+            }
+        }
+        fireTableCellUpdated(rowIndex, columnIndex);
+    }
+
+    @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        // TODO: Implement this method
+        if (loggedinUser.getRole() == Role.ADMIN) {
+            return true;
+        } else if (loggedinUser.getRole() == Role.USER && columnIndex == 2) {
+            return true;
+        }
+        return false;
     }
-
-    public void addItem(Item item) {
-        this.itemsList.add(item);
-    }
-
-    public void removeItem(Item item) {
-        this.itemsList.remove(item);
-    }
-
 }

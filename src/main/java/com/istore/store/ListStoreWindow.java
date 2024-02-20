@@ -3,6 +3,7 @@ package com.istore.store;
 import com.istore.WindowManager;
 import com.istore.inventory.Inventory;
 import com.istore.inventory.InventoryController;
+import com.istore.user.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,11 +18,14 @@ public class ListStoreWindow extends JPanel implements StoreListener {
     private final JPanel storesPanel;
     private final WindowManager windowManager;
 
-    public ListStoreWindow(StoreController storeController, InventoryController inventoryController, WindowManager windowManager) {
+    private final User loggedinUser;
+
+    public ListStoreWindow(StoreController storeController, InventoryController inventoryController, WindowManager windowManager, User loggedinUser) {
         this.storeController = storeController;
         this.inventoryController = inventoryController;
         this.storesPanel = new JPanel(new GridLayout(storeController.getStoresList().size(), 1));
         this.windowManager = windowManager;
+        this.loggedinUser = loggedinUser;
         initializeWindow();
         storeController.addStoreListener(this);
     }
@@ -37,7 +41,7 @@ public class ListStoreWindow extends JPanel implements StoreListener {
         for (Store store : storeController.getStoresList()) {
             JButton storeButton = new JButton(store.getName());
             storeButton.addActionListener(e -> {
-                windowManager.goToWindow(new StoreWindow(store, storeController, windowManager));
+                windowManager.goToWindow(new StoreWindow(store, storeController, windowManager, loggedinUser));
             });
             storesPanel.add(storeButton);
         }

@@ -1,13 +1,17 @@
 package com.istore.inventory;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
+@AllArgsConstructor
 public class Item {
     public final String id;
-    public final String name;
-    public final int price;
-    public final int quantity;
+    public String name;
+    public int price;
+    public int quantity;
+
 }

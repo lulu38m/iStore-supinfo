@@ -55,7 +55,7 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
 
         updateMenuBar();
 
-        windowManager.goToWindow(new ListStoreWindow(storeController, inventory, windowManager));
+        windowManager.goToWindow(new ListStoreWindow(storeController, inventory, windowManager, loggedInUser));
     }
 
     @Override
