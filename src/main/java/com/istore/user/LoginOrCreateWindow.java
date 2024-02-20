@@ -1,13 +1,17 @@
 package com.istore.user;
 
+import com.istore.WindowManager;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class LoginOrCreateWindow extends JPanel {
     private final UserController userController;
+    private final WindowManager windowManager;
 
-    public LoginOrCreateWindow(UserController userController) {
+    public LoginOrCreateWindow(UserController userController, WindowManager windowManager) {
         this.userController = userController;
+        this.windowManager = windowManager;
         this.initializeWindow();
     }
 
@@ -51,11 +55,7 @@ public class LoginOrCreateWindow extends JPanel {
         panel.add(loginButton);
 
         loginButton.addActionListener(e -> {
-            removeAll();
-            add(new LoginWindow(this.userController));
-            add(noAccountPanel());
-            revalidate();
-            repaint();
+            changeWindowToLogin();
         });
 
         return panel;

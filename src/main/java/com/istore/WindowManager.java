@@ -3,6 +3,7 @@ package com.istore;
 import lombok.RequiredArgsConstructor;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class WindowManager {
             windowPanel.remove(currentWindowPanel);
         }
         currentWindowPanel = panel;
-        windowPanel.add(currentWindowPanel);
+        windowPanel.add(currentWindowPanel, BorderLayout.CENTER);
         windowPanel.revalidate();
         windowPanel.repaint();
     }
@@ -38,8 +39,9 @@ public class WindowManager {
 
     public void initializeWindow() {
         frame.setTitle("iStore");
-        frame.setSize(600, 300);
+        frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
+        frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

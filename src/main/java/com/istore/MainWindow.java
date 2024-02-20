@@ -19,15 +19,16 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
 
     private final WindowManager windowManager;
     private final UserController userController;
+    private final WhitelistUserController whitelistUserController;
     private final JLabel userLabel;
     private User loggedInUser;
     private final StoreController storeController;
     private InventoryController inventory;
 
-
-
-    public MainWindow(UserController userController, StoreController storeController, Inventory inventory) {
+    public MainWindow(UserController userController, WhitelistUserController whitelistUserController, StoreController storeController) {
         this.storeController = storeController;
+        this.userController = userController;
+        this.whitelistUserController = whitelistUserController;
 
         JPanel windowPanel = new JPanel();
         windowPanel.setLayout(new BoxLayout(windowPanel, BoxLayout.Y_AXIS));
@@ -36,12 +37,10 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
         userLabel.setVerticalAlignment(SwingConstants.CENTER);
         windowPanel.add(userLabel);
 
-        this.userController = userController;
-
         this.windowManager = new WindowManager(this, windowPanel);
         this.windowManager.initializeWindow();
 
-        windowManager.goToWindow(new LoginOrCreateWindow(userController));
+        windowManager.goToWindow(new LoginOrCreateWindow(userController, windowManager));
         add(windowPanel);
 
         userController.getUserModel().subscribe(this);
@@ -54,14 +53,15 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
 
         updateMenuBar();
 
-        windowManager.goToWindow(new ListStoreWindow(storeController, inventory, windowManager, loggedInUser));
+        windowManager.goToWindow(new ListStoreWindow(storeController, windowManager));
+        updateMenuBar();
     }
 
     @Override
     public void onLogout() {
         loggedInUser = null;
         userLabel.setText("");
-        windowManager.goToWindow(new LoginOrCreateWindow(userController));
+        windowManager.goToWindow(new LoginOrCreateWindow(userController, windowManager));
         updateMenuBar();
     }
 
@@ -85,7 +85,7 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
         JMenu userMenu = new UserMenu(userController, loggedInUser, windowManager);
 
         if (loggedInUser.getRole().equals(Role.ADMIN)) {
-            JMenu adminMenu = new AdminMenu();
+            JMenu adminMenu = new AdminMenu(windowManager, userController, whitelistUserController, loggedInUser);
             menuBar.add(adminMenu);
         }
 

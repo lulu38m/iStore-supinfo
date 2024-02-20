@@ -28,6 +28,16 @@ public class WhitelistUserModel {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    public void AddWhitelist(Whitelist whitelist) {
+        this.whitelistedEmails.add(whitelist);
+    }
+
+    public boolean hasWhitelistedEmail(String email) {
+        return this.whitelistedEmails.stream().anyMatch(whitelist -> whitelist.getEmail().equals(email));
+    }
+
+    public List<Whitelist> listWhitelists() {
+        return this.whitelistedEmails;
     }
 
     public void removeWhitelistedEmail(String email) {

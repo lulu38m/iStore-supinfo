@@ -15,40 +15,19 @@ import com.istore.user.UserModel;
 import com.istore.user.WhitelistUserController;
 import com.istore.user.WhitelistUserModel;
 import lombok.Getter;
-import org.mindrot.jbcrypt.BCrypt;
 
 public class Main {
-
-    @Getter
-    private static MainWindow window;
-    private static UserController userController;
-    private static StoreController storeController;
 
     public static void main(String[] args) {
         DbTools dbTools = new DbTools();
         dbTools.initDatabase();
 
-        WhitelistUserModel whitelistUserModel = new WhitelistUserModel(dbTools);
-        WhitelistUserController whitelistUserController = new WhitelistUserController(whitelistUserModel);
-
         UserModel userModel = new UserModel(dbTools);
-        userController = new UserController(userModel, whitelistUserController);
 
-//        // Temporary data
-////        whitelistUserController.addWhitelistedEmail("bbb@bbb.fr");
-//        userModel.addUser(new User("aaa@aaa.fr", "aaa", BCrypt.hashpw("aaa", BCrypt.gensalt()), Role.USER));
-//        userModel.addUser(new User("ccc@ccc.fr", "ccc", BCrypt.hashpw("ccc", BCrypt.gensalt()), Role.ADMIN));
+        WhitelistUserModel whitelistUserModel = new WhitelistUserModel();
+        WhitelistUserController whitelistUserController = new WhitelistUserController(whitelistUserModel, userModel);
 
-
-        ItemModel itemModel = new ItemModel();
-        itemModel.addItem(new Item("item1", "1", 10, 11));
-        itemModel.addItem(new Item("item2", "2", 20, 21));
-        itemModel.addItem(new Item("item3", "3", 30, 31));
-        itemModel.addItem(new Item("item4", "4", 40, 41));
-
-        Inventory inventory = new Inventory(itemModel.getItemsList().subList(0, 2));
-        Inventory inventory2 = new Inventory(itemModel.getItemsList().subList(2, 4));
-
+        UserController userController = new UserController(userModel, whitelistUserController);
 
         StoreModel storeModel = new StoreModel();
         storeModel.addStore(new Store("Magasin 1", "1", inventory));
@@ -56,6 +35,11 @@ public class Main {
 
         storeController = new StoreController(storeModel);
         window = new MainWindow(userController, storeController, inventory);
+        storeModel.addStore(new Store("Magasin 1", "1"));
+        storeModel.addStore(new Store("Magasin 2", "2"));
+        StoreController storeController = new StoreController(storeModel);
+
+        Window window = new MainWindow(userController, whitelistUserController, storeController);
         window.setVisible(true);
     }
 

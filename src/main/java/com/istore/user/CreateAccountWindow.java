@@ -47,31 +47,13 @@ public class CreateAccountWindow extends JPanel {
             return;
         }
 
-        boolean isEmailValid = userController.validateEmail(emailField.getText());
-        if (!isEmailValid) {
-            JOptionPane.showMessageDialog(this, "L'adresse email n'est pas valide", "Erreur", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        boolean isUsernameAvailable = userController.isPseudoAvailable(usernameField.getText());
-        if (!isUsernameAvailable) {
-            JOptionPane.showMessageDialog(this, "Le nom d'utilisateur est déjà pris", "Erreur", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        boolean isEmailAvailable = userController.isEmailAvailable(emailField.getText());
-        if (!isEmailAvailable) {
-            JOptionPane.showMessageDialog(this, "L'adresse email est déjà utilisée", "Erreur", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
         try {
             userController.createUser(emailField.getText(), usernameField.getText(), String.valueOf(passwordField.getPassword()));
             JOptionPane.showMessageDialog(this, "Compte créé avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
 
             parentWindow.changeWindowToLogin();
-        } catch (UserEmailNotWhitelistedException e) {
-            JOptionPane.showMessageDialog(this, "L'adresse email n'est pas autorisée", "Erreur", JOptionPane.ERROR_MESSAGE);
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
