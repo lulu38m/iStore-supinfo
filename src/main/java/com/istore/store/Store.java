@@ -1,6 +1,7 @@
 package com.istore.store;
 
 
+import com.istore.inventory.Inventory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Store {
 
-    public final String name;
-    public final String id;
+    private final String name;
+    private final String id;
+    private final Inventory inventory;
 }
