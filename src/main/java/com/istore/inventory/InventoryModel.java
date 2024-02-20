@@ -5,7 +5,6 @@ import com.istore.database.DbTools;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class InventoryModel {
@@ -20,7 +19,7 @@ public class InventoryModel {
 
     public void addInventory(Inventory item) {
         String sql = "INSERT INTO \"INVENTORY\" (id) VALUES (?)";
-        try (Connection connection = dbTools.getConnection();
+        try (Connection connection = DbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, item.getId().toString());
             statement.execute();
@@ -32,7 +31,7 @@ public class InventoryModel {
 
     public void removeInventory(Inventory item) {
         String sql = "DELETE FROM \"INVENTORY\" WHERE id = ?";
-        try (Connection connection = dbTools.getConnection();
+        try (Connection connection = DbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, item.getId().toString());
             statement.execute();
@@ -45,7 +44,7 @@ public class InventoryModel {
 
     public Inventory getInventoryById(UUID inventoryId) {
         String sql = "SELECT * FROM \"INVENTORY\" WHERE id = ?";
-        try (Connection connection = dbTools.getConnection();
+        try (Connection connection = DbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, inventoryId.toString());
             return new Inventory(inventoryId, itemModel.getItemsByInventoryId(inventoryId));

@@ -3,11 +3,11 @@ package com.istore.store;
 import com.istore.database.DbTools;
 import com.istore.inventory.Inventory;
 import com.istore.inventory.InventoryModel;
-import com.istore.inventory.Item;
-import com.istore.user.Role;
-import com.istore.user.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,7 +25,7 @@ public class StoreModel {
     public void addStore(Store store) {
         // create join with inventory and store
         String sql = "INSERT INTO \"STORE\" (id, name, inventory_id) VALUES (?, ?, ?)";
-        try (Connection connection = dbTools.getConnection();
+        try (Connection connection = DbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, store.getId());
             statement.setString(2, store.getName());
@@ -41,7 +41,7 @@ public class StoreModel {
 
     public List<Store> getStoresList() {
         String sql = "SELECT * FROM \"STORE\"";
-        try (Connection connection = dbTools.getConnection();
+        try (Connection connection = DbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             List<Store> stores = new ArrayList<>();

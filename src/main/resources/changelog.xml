@@ -55,11 +55,11 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint  baseColumnNames="inventory_id"
-                                  baseTableName="STORE"
-                                  constraintName="fk_store_inventory"
-                                  referencedColumnNames="id"
-                                  referencedTableName="INVENTORY"/>
+        <addForeignKeyConstraint baseColumnNames="inventory_id"
+                                 baseTableName="STORE"
+                                 constraintName="fk_store_inventory"
+                                 referencedColumnNames="id"
+                                 referencedTableName="INVENTORY"/>
     </changeSet>
 
     <changeSet id="5" author="titi">
@@ -80,11 +80,11 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint  baseColumnNames="inventory_id"
-                                  baseTableName="ITEM"
-                                  constraintName="fk_item_inventory"
-                                  referencedColumnNames="id"
-                                  referencedTableName="INVENTORY"/>
+        <addForeignKeyConstraint baseColumnNames="inventory_id"
+                                 baseTableName="ITEM"
+                                 constraintName="fk_item_inventory"
+                                 referencedColumnNames="id"
+                                 referencedTableName="INVENTORY"/>
     </changeSet>
 
 </databaseChangeLog>

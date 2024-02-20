@@ -9,16 +9,14 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DbTools {
-    private static String url = "jdbc:h2:file:./db/istore;AUTO_SERVER=true";
-    private static String user = "sa";
-    private static String passwd = "";
+    private static final String url = "jdbc:h2:file:./db/istore;AUTO_SERVER=true";
+    private static final String user = "sa";
+    private static final String passwd = "";
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, passwd);
@@ -32,7 +30,7 @@ public class DbTools {
 
         try {
             Scope.child(config, () -> {
-                Connection connection = this.getConnection();
+                Connection connection = getConnection();
                 Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
 
                 Liquibase liquibase = new Liquibase("changelog.xml", new ClassLoaderResourceAccessor(), database);

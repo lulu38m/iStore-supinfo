@@ -1,12 +1,11 @@
 package com.istore.store;
 
 import com.istore.inventory.Item;
-import com.istore.user.User;
 import com.istore.user.Role;
-import lombok.Getter;
+import com.istore.user.User;
 
-import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import java.util.List;
 
 public class ItemsTableModel extends AbstractTableModel {
     private final List<Item> itemsList;
@@ -80,9 +79,6 @@ public class ItemsTableModel extends AbstractTableModel {
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         if (loggedinUser.getRole() == Role.ADMIN) {
             return true;
-        } else if (loggedinUser.getRole() == Role.USER && columnIndex == 2) {
-            return true;
-        }
-        return false;
+        } else return loggedinUser.getRole() == Role.USER && columnIndex == 2;
     }
 }

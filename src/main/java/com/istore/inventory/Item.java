@@ -2,7 +2,6 @@ package com.istore.inventory;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
@@ -12,8 +11,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Item {
     public final UUID id;
+    private final Inventory inventory;
     public String name;
     public int price;
     public int quantity;
-    private final Inventory inventory;
 }

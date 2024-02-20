@@ -1,7 +1,6 @@
 package com.istore.inventory;
 
 import com.istore.database.DbTools;
-import com.istore.store.Store;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class ItemModel {
 
     public List<Item> getItemsByInventoryId(UUID inventoryId) {
         String sql = "SELECT * FROM \"ITEM\" WHERE inventory_id = ?";
-        try (var connection = dbTools.getConnection();
+        try (var connection = DbTools.getConnection();
              var statement = connection.prepareStatement(sql)) {
             statement.setString(1, inventoryId.toString());
             var rs = statement.executeQuery();
@@ -30,7 +29,7 @@ public class ItemModel {
                 var price = rs.getInt("price");
                 var quantity = rs.getInt("quantity");
                 var inventory = new Inventory(inventoryId, items);
-                items.add(new Item(id, name, price, quantity, inventory));
+                items.add(new Item(id, inventory, name, price, quantity));
             }
             return items;
         } catch (Exception e) {
@@ -41,7 +40,7 @@ public class ItemModel {
 
     public void addItem(Item item) {
         String sql = "INSERT INTO \"ITEM\" (id, name, price, quantity, inventory_id) VALUES (?, ?, ?, ?, ?)";
-        try (var connection = dbTools.getConnection();
+        try (var connection = DbTools.getConnection();
              var statement = connection.prepareStatement(sql)) {
             statement.setString(1, item.getId().toString());
             statement.setString(2, item.getName());

@@ -1,20 +1,15 @@
 package com.istore;
 
 import com.istore.database.DbTools;
-import com.istore.inventory.*;
-import com.istore.inventory.*;
-import com.istore.user.*;
-import com.istore.store.Store;
+import com.istore.inventory.InventoryController;
+import com.istore.inventory.InventoryModel;
+import com.istore.inventory.ItemModel;
 import com.istore.store.StoreController;
 import com.istore.store.StoreModel;
-import com.istore.user.Role;
-import com.istore.user.User;
 import com.istore.user.UserController;
 import com.istore.user.UserModel;
 import com.istore.user.WhitelistUserController;
 import com.istore.user.WhitelistUserModel;
-
-import java.awt.*;
 
 public class Main {
 
@@ -45,8 +40,8 @@ public class Main {
 //        storeModel.addStore(new Store("Magasin 1", "1", inventory));
 //        storeModel.addStore(new Store("Magasin 2", "2", inventory2));
 
-        storeController = new StoreController(storeModel);
-        window = new MainWindow(userController, storeController, inventoryController);
+        StoreController storeController = new StoreController(storeModel);
+        MainWindow window = new MainWindow(userController, whitelistUserController, storeController, inventoryController);
         window.setVisible(true);
     }
 
