@@ -33,4 +33,5 @@ public class StoreController {
     public List<Store> getStoresList() {
         return storeModel.getStoresList();
     }
+
 }

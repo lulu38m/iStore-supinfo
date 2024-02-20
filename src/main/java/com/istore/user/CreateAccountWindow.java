@@ -4,11 +4,11 @@ import javax.swing.*;
 
 public class CreateAccountWindow extends JPanel {
     private final UserController userController;
+    private final LoginOrCreateWindow parentWindow;
     private JTextField usernameField;
     private JTextField emailField;
     private JPasswordField passwordField;
     private JButton registerButton;
-    private final LoginOrCreateWindow parentWindow;
 
     public CreateAccountWindow(UserController userController, LoginOrCreateWindow parentWindow) {
         this.userController = userController;

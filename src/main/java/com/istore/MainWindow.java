@@ -1,11 +1,17 @@
 package com.istore;
 
+import com.istore.inventory.Inventory;
+import com.istore.inventory.InventoryController;
 import com.istore.menu.AdminMenu;
 import com.istore.menu.BackButton;
 import com.istore.menu.UserMenu;
 import com.istore.store.ListStoreWindow;
-import com.istore.store.StoreController;
 import com.istore.user.*;
+import com.istore.store.StoreController;
+import com.istore.user.LoginOrCreateWindow;
+import com.istore.user.User;
+import com.istore.user.UserController;
+import com.istore.user.UserLoginEventsListener;
 
 import javax.swing.*;
 
@@ -16,9 +22,11 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
     private final JLabel userLabel;
     private User loggedInUser;
     private final StoreController storeController;
+    private InventoryController inventory;
 
 
-    public MainWindow(UserController userController, StoreController storeController) {
+
+    public MainWindow(UserController userController, StoreController storeController, Inventory inventory) {
         this.storeController = storeController;
 
         JPanel windowPanel = new JPanel();
@@ -46,8 +54,7 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
 
         updateMenuBar();
 
-        windowManager.goToWindow(new ListStoreWindow(storeController, windowManager));
-        updateMenuBar();
+        windowManager.goToWindow(new ListStoreWindow(storeController, inventory, windowManager, loggedInUser));
     }
 
     @Override
@@ -58,6 +65,16 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
         updateMenuBar();
     }
 
+    @Override
+    public void onUpdate(User newUser) {
+        // Update the logged in user if it's the same user
+        if (loggedInUser != null && loggedInUser.getId().equals(newUser.getId())) {
+            loggedInUser = newUser;
+            userLabel.setText("Hello, " + newUser.getPseudo() + "!");
+            updateMenuBar();
+        }
+    }
+
     private void updateMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
@@ -65,7 +82,7 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
             setJMenuBar(menuBar);
             return;
         }
-        JMenu userMenu = new UserMenu(userController);
+        JMenu userMenu = new UserMenu(userController, loggedInUser, windowManager);
 
         if (loggedInUser.getRole().equals(Role.ADMIN)) {
             JMenu adminMenu = new AdminMenu();
@@ -78,5 +95,6 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
         menuBar.add(backButton);
 
         setJMenuBar(menuBar);
+        menuBar.updateUI();
     }
 }

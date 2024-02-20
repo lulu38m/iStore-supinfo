@@ -10,7 +10,7 @@ public class AdminMenu extends JMenu {
         add(new AdminMenuAddShopButton());
     }
 
-    private class AdminMenuWhitelistUserButton extends MenuItem {
+    private static class AdminMenuWhitelistUserButton extends MenuItem {
         public AdminMenuWhitelistUserButton() {
             super("Whitelist a user");
         }
@@ -21,7 +21,7 @@ public class AdminMenu extends JMenu {
         }
     }
 
-    private class AdminMenuAddShopButton extends MenuItem {
+    private static class AdminMenuAddShopButton extends MenuItem {
         public AdminMenuAddShopButton() {
             super("Add a shop");
         }

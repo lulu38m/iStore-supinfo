@@ -1,6 +1,5 @@
 package com.istore;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.swing.*;
@@ -12,9 +11,8 @@ public class WindowManager {
 
     private final JFrame frame;
     private final JPanel windowPanel;
-    private JPanel currentWindowPanel;
-
     private final List<JPanel> historyPanels = new ArrayList<>();
+    private JPanel currentWindowPanel;
 
     public void goToWindow(JPanel panel) {
         historyPanels.add(panel);
@@ -40,7 +38,7 @@ public class WindowManager {
 
     public void initializeWindow() {
         frame.setTitle("iStore");
-        frame.setSize(400, 300);
+        frame.setSize(600, 300);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
