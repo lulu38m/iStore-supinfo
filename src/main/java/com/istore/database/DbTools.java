@@ -18,6 +18,11 @@ public class DbTools {
     private static String user = "sa";
     private static String passwd = "";
 
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(url, user, passwd);
+
+    }
+
     public void initDatabase() {
 
         Map<String, Object> config = new HashMap<>();
@@ -35,10 +40,5 @@ public class DbTools {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
-
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, user, passwd);
-
     }
 }

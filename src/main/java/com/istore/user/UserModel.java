@@ -2,7 +2,6 @@ package com.istore.user;
 
 import com.istore.database.DbTools;
 import lombok.Getter;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class UserModel implements UserLoginEventsSubscriber {
         this.listeners = new ArrayList<>();
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         String sql = "INSERT INTO \"USER\" (id, email, pseudo, password, role) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -62,14 +61,17 @@ public class UserModel implements UserLoginEventsSubscriber {
                 String pseudo = rs.getString("pseudo");
                 String password = rs.getString("password");
                 String role = rs.getString("role");
-                return new User(UUID.fromString(id), email, pseudo, password, Role.valueOf(role));
+
+                User user = new User(UUID.fromString(id), email, pseudo, password, Role.valueOf(role));
+                listeners.forEach(listener -> listener.onUpdate(user));
+
+                return user;
             }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
 
-        listeners.forEach(listener -> listener.onUpdate(user));
         return null;
     }
 

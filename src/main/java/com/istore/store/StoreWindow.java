@@ -1,10 +1,11 @@
 package com.istore.store;
 
 import com.istore.WindowManager;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class  StoreWindow extends JPanel {
+public class StoreWindow extends JPanel {
 
     private JLabel storeNameLabel;
 

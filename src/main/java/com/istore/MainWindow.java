@@ -14,8 +14,8 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
     private final WindowManager windowManager;
     private final UserController userController;
     private final JLabel userLabel;
-    private User loggedInUser;
     private final StoreController storeController;
+    private User loggedInUser;
 
 
     public MainWindow(UserController userController, StoreController storeController) {

@@ -13,11 +13,8 @@ public class WhitelistUserController {
         }
         whitelistUserModel.addWhitelistedEmail(email);
     }
-    public void addWhitelistedEmail(String email) {
-        whitelistUserModel.addWhitelistedEmail(email);
-    }
 
-    // Todo remove this
+    // Todo remove this method
     public void addWhitelistedEmail(String email) {
         whitelistUserModel.addWhitelistedEmail(email);
     }

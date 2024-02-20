@@ -4,7 +4,6 @@ import com.istore.WindowManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class ListStoreWindow extends JPanel implements StoreListener {
 

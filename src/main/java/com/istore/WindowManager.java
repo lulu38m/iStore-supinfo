@@ -1,6 +1,5 @@
 package com.istore;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.swing.*;
@@ -12,9 +11,8 @@ public class WindowManager {
 
     private final JFrame frame;
     private final JPanel windowPanel;
-    private JPanel currentWindowPanel;
-
     private final List<JPanel> historyPanels = new ArrayList<>();
+    private JPanel currentWindowPanel;
 
     public void goToWindow(JPanel panel) {
         historyPanels.add(panel);
