@@ -59,7 +59,7 @@ public class StoreModel {
                 String name = rs.getString("name");
                 UUID inventoryId = UUID.fromString(rs.getString("inventory_id"));
                 Inventory inventory = inventoryModel.getInventoryById(inventoryId);
-                stores.add(new Store(UUID.fromString(id),name, inventory));
+                stores.add(new Store(UUID.fromString(id), name, inventory, new ArrayList<>()));
             }
             return stores;
         } catch (SQLException e) {

@@ -1,5 +1,6 @@
 package com.istore.user;
 
+import com.istore.store.Store;
 import com.istore.store.StoreController;
 
 import com.istore.jtable.ButtonColumn;
@@ -33,7 +34,7 @@ public class ListUsersWindow extends JPanel {
         col.setCellEditor(new DefaultCellEditor(new JComboBox<>(Role.values())));
 
         TableColumn storeCol = table.getColumnModel().getColumn(4);
-        storeCol.setCellEditor(new DefaultCellEditor(new JComboBox<>(storeController.getStoresList().toArray())));
+        storeCol.setCellEditor(new DefaultCellEditor(new JComboBox<>(storeController.getStoresList().stream().map(Store::getName).toArray())));
 
         new ButtonColumn(table, new AbstractAction() {
             @Override

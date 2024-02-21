@@ -95,7 +95,7 @@ public class ListUsersTableModel extends AbstractTableModel {
                 user.setRole((Role) aValue);
                 break;
             case 4:
-                user.setStores((List<Store>) aValue);
+                user.setStores(storeController.getStoresList().stream().filter(store -> ((String) aValue).contains(store.getName())).collect(Collectors.toList()));
                 break;
         }
 
