@@ -1,5 +1,7 @@
 package com.istore.user;
 
+import com.istore.store.StoreController;
+
 import com.istore.jtable.ButtonColumn;
 
 import javax.swing.*;
@@ -11,10 +13,13 @@ public class ListUsersWindow extends JPanel {
 
     private final ListUsersTableModel listUsersTableModel;
     private final UserController userController;
+    private final StoreController storeController;
 
-    public ListUsersWindow(UserController userController, User loggedInUser, UserLoginEventsListener listener) {
+    public ListUsersWindow(UserController userController, User loggedInUser, StoreController storeController, UserLoginEventsListener listener) {
+
         this.userController = userController;
-        this.listUsersTableModel = new ListUsersTableModel(userController, loggedInUser, listener);
+        this.storeController = storeController;
+        this.listUsersTableModel = new ListUsersTableModel(userController,storeController , loggedInUser, listener);
         listUsersTableModel.addUsers(userController.getUserModel().getUsersList());
         this.initializeWindow();
     }
@@ -23,6 +28,12 @@ public class ListUsersWindow extends JPanel {
         JPanel panel = new JPanel(new BorderLayout());
         JTable table = new JTable(this.listUsersTableModel);
         table.setRowHeight(30);
+
+        TableColumn col = table.getColumnModel().getColumn(3);
+        col.setCellEditor(new DefaultCellEditor(new JComboBox<>(Role.values())));
+
+        TableColumn storeCol = table.getColumnModel().getColumn(4);
+        storeCol.setCellEditor(new DefaultCellEditor(new JComboBox<>(storeController.getStoresList().toArray())));
 
         new ButtonColumn(table, new AbstractAction() {
             @Override
@@ -35,10 +46,7 @@ public class ListUsersWindow extends JPanel {
                     JOptionPane.showMessageDialog(ListUsersWindow.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }, 4);
-
-        TableColumn col = table.getColumnModel().getColumn(3);
-        col.setCellEditor(new DefaultCellEditor(new JComboBox<>(Role.values())));
+        }, 5);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

@@ -1,26 +1,32 @@
 package com.istore.user;
 
+import com.istore.store.Store;
+import com.istore.store.StoreController;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListUsersTableModel extends AbstractTableModel {
 
     private final List<User> users = new ArrayList<>();
     private final UserController userController;
+    private final StoreController storeController;
     private final User loggedInUser;
     private final UserLoginEventsListener listener;
 
-    public ListUsersTableModel(UserController userController, User loggedInUser, UserLoginEventsListener listener) {
+    public ListUsersTableModel(UserController userController, StoreController storeController, User loggedInUser, UserLoginEventsListener listener) {
         this.userController = userController;
         this.loggedInUser = loggedInUser;
         this.listener = listener;
+        this.storeController = storeController;
     }
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return 6;
     }
 
     @Override
@@ -41,6 +47,8 @@ public class ListUsersTableModel extends AbstractTableModel {
             case 3:
                 return "Role";
             case 4:
+                return "Stores";
+            case 5:
                 return "Actions";
             default:
                 return "";
@@ -60,6 +68,8 @@ public class ListUsersTableModel extends AbstractTableModel {
             case 3:
                 return user.getRole().toString();
             case 4:
+                return user.getStores().stream().map(Store::getName).collect(Collectors.joining(", "));
+            case 5:
                 return "Delete";
             default:
                 return "";
@@ -83,6 +93,9 @@ public class ListUsersTableModel extends AbstractTableModel {
                 break;
             case 3:
                 user.setRole((Role) aValue);
+                break;
+            case 4:
+                user.setStores((List<Store>) aValue);
                 break;
         }
 

@@ -18,4 +18,5 @@ public class InventoryController {
     public void removeInventory(Inventory item) {
         this.inventoryModel.removeInventory(item);
     }
+
 }

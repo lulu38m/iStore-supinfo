@@ -2,6 +2,7 @@ package com.istore.menu;
 
 import com.istore.MainWindow;
 import com.istore.WindowManager;
+import com.istore.store.StoreController;
 import com.istore.user.ListUsersWindow;
 import com.istore.user.User;
 import com.istore.user.UserController;
@@ -16,13 +17,15 @@ public class UserMenu extends JMenu {
     private final WindowManager windowManager;
     private final User loggedInUser;
     private final MainWindow mainWindow;
+    private final StoreController storeController;
 
-    public UserMenu(UserController userController, User loggedInUser, WindowManager windowManager, MainWindow mainWindow) {
+    public UserMenu(UserController userController, User loggedInUser, WindowManager windowManager, MainWindow mainWindow, StoreController storeController) {
         super("User");
         this.userController = userController;
         this.loggedInUser = loggedInUser;
         this.windowManager = windowManager;
         this.mainWindow = mainWindow;
+        this.storeController = storeController;
 
         add(new UserProfileButton());
         add(new UserMenuListUsersButton());
@@ -47,7 +50,7 @@ public class UserMenu extends JMenu {
 
         @Override
         public void onClick(ActionEvent e) {
-            windowManager.goToWindow(new ListUsersWindow(userController, loggedInUser, mainWindow));
+            windowManager.goToWindow(new ListUsersWindow(userController, loggedInUser,mainWindow, storeController));
         }
     }
 

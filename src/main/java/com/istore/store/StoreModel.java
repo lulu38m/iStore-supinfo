@@ -35,6 +35,15 @@ public class StoreModel {
 
     }
 
+    public Store deleteStore(String storeName) {
+        for (Store store : storesList) {
+            if (store.getName().equals(storeName)) {
+                storesList.remove(store);
+                return store;
+            }
+        }
+        return null;
+    }
 
     public List<Store> getStoresList() {
         String sql = "SELECT * FROM \"STORE\"";
@@ -55,6 +64,4 @@ public class StoreModel {
             throw new RuntimeException(e);
         }
     }
-
-
 }

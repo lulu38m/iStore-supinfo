@@ -49,4 +49,10 @@ public class ItemModel {
             throw new RuntimeException(e);
         }
     }
+
+    public void removeItem(Item item) {
+        this.itemsList.remove(item);
+    }
+
+
 }

@@ -4,8 +4,8 @@ import com.istore.inventory.Item;
 import com.istore.user.Role;
 import com.istore.user.User;
 
-import javax.swing.table.AbstractTableModel;
 import java.util.List;
+import javax.swing.table.AbstractTableModel;
 
 public class ItemsTableModel extends AbstractTableModel {
     private final List<Item> itemsList;
@@ -26,6 +26,8 @@ public class ItemsTableModel extends AbstractTableModel {
                 return "Price";
             case 2:
                 return "Quantity";
+            case 3:
+                return "Delete";
             default:
                 return "";
         }
@@ -33,7 +35,7 @@ public class ItemsTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -51,6 +53,8 @@ public class ItemsTableModel extends AbstractTableModel {
                 return item.getPrice();
             case 2:
                 return item.getQuantity();
+            case 3:
+                return "Delete";
             default:
                 return "";
         }
@@ -79,6 +83,22 @@ public class ItemsTableModel extends AbstractTableModel {
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         if (loggedinUser.getRole() == Role.ADMIN) {
             return true;
-        } else return loggedinUser.getRole() == Role.USER && columnIndex == 2;
+        } else if (loggedinUser.getRole() == Role.USER && columnIndex == 2) {
+            return true;
+        } else if (loggedinUser.getRole() == Role.USER && columnIndex == 3) {
+            return false;
+        }
+        return false;
+    }
+
+    public Item removeItem(int rowIndex) {
+        Item item = itemsList.remove(rowIndex);
+        fireTableRowsDeleted(rowIndex, rowIndex);
+        return item;
+    }
+
+    public void addItem(Item item) {
+        itemsList.add(item);
+        fireTableDataChanged();
     }
 }

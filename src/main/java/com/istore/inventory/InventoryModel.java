@@ -50,4 +50,5 @@ public class InventoryModel {
             throw new RuntimeException(e);
         }
     }
+
 }
