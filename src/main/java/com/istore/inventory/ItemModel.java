@@ -62,4 +62,23 @@ public class ItemModel {
     }
 
 
+    public List<Item> getItemsList() {
+        String sql = "SELECT * FROM \"ITEM\"";
+        try (var connection = dbTools.getConnection();
+             var statement = connection.prepareStatement(sql)) {
+            var rs = statement.executeQuery();
+            var items = new ArrayList<Item>();
+            while (rs.next()) {
+                var id = UUID.fromString(rs.getString("id"));
+                var name = rs.getString("name");
+                var price = rs.getInt("price");
+                var quantity = rs.getInt("quantity");
+                items.add(new Item(id, null, name, price, quantity));
+            }
+            return items;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 }
