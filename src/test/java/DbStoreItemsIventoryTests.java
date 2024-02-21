@@ -41,8 +41,8 @@ public class DbStoreItemsIventoryTests {
         inventory2.getItemsList().add(itemModel.getItemsList().get(2));
         inventory2.getItemsList().add(itemModel.getItemsList().get(3));
 
-        Store store = new Store("Magasin 1", "1", inventory);
-        Store store2 = new Store("Magasin 2", "2", inventory2);
+        Store store = new Store(UUID.randomUUID(), "Magasin 1", inventory, new ArrayList<>());
+        Store store2 = new Store(UUID.randomUUID(), "Magasin 2", inventory2, new ArrayList<>());
 
         storeModel.addStore(store);
         storeModel.addStore(store2);

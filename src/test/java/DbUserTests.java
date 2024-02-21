@@ -1,11 +1,15 @@
 import com.istore.database.DbTools;
+import com.istore.inventory.InventoryModel;
+import com.istore.inventory.ItemModel;
+import com.istore.store.StoreController;
+import com.istore.store.StoreModel;
 import com.istore.user.Role;
 import com.istore.user.User;
-import com.istore.user.UserController;
 import com.istore.user.UserModel;
 import org.junit.jupiter.api.Test;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,9 +20,13 @@ public class DbUserTests {
     public void testAddUser() {
         DbTools dbTools = new DbTools();
         dbTools.initDatabase();
-        UserModel userModel = new UserModel(dbTools);
+        ItemModel itemModel = new ItemModel(dbTools);
+        InventoryModel inventoryModel = new InventoryModel(dbTools, itemModel);
+        StoreModel storeModel = new StoreModel(dbTools, inventoryModel);
+        StoreController storeController = new StoreController(storeModel);
+        UserModel userModel = new UserModel(dbTools, storeController);
 
-        userModel.addUser(new User(UUID.randomUUID(), "test@test.fr", "test", BCrypt.hashpw("test", BCrypt.gensalt()), Role.USER));
+        userModel.addUser(new User(UUID.randomUUID(), "test@test.fr", "test", BCrypt.hashpw("test", BCrypt.gensalt()), Role.USER, new ArrayList<>()));
 
         assertEquals(1, userModel.getUsersList().size());
 
@@ -36,9 +44,13 @@ public class DbUserTests {
     public void testUpdateUser() {
         DbTools dbTools = new DbTools();
         dbTools.initDatabase();
-        UserModel userModel = new UserModel(dbTools);
+        ItemModel itemModel = new ItemModel(dbTools);
+        InventoryModel inventoryModel = new InventoryModel(dbTools, itemModel);
+        StoreModel storeModel = new StoreModel(dbTools, inventoryModel);
+        StoreController storeController = new StoreController(storeModel);
+        UserModel userModel = new UserModel(dbTools, storeController);
 
-        User user = new User(UUID.randomUUID(), "test@test1.fr", "test1", BCrypt.hashpw("test", BCrypt.gensalt()), Role.USER);
+        User user = new User(UUID.randomUUID(), "test@test1.fr", "test1", BCrypt.hashpw("test", BCrypt.gensalt()), Role.USER, new ArrayList<>());
 
         userModel.addUser(user);
 
@@ -65,9 +77,13 @@ public class DbUserTests {
     public void testRemoveUser() {
         DbTools dbTools = new DbTools();
         dbTools.initDatabase();
-        UserModel userModel = new UserModel(dbTools);
+        ItemModel itemModel = new ItemModel(dbTools);
+        InventoryModel inventoryModel = new InventoryModel(dbTools, itemModel);
+        StoreModel storeModel = new StoreModel(dbTools, inventoryModel);
+        StoreController storeController = new StoreController(storeModel);
+        UserModel userModel = new UserModel(dbTools, storeController);
 
-        User user = new User(UUID.randomUUID(), "test@test2.fr", "test2", BCrypt.hashpw("test", BCrypt.gensalt()), Role.USER);
+        User user = new User(UUID.randomUUID(), "test@test2.fr", "test2", BCrypt.hashpw("test", BCrypt.gensalt()), Role.USER, new ArrayList<>());
 
         userModel.addUser(user);
 
@@ -81,9 +97,13 @@ public class DbUserTests {
     public void testGetUserByEmail() {
         DbTools dbTools = new DbTools();
         dbTools.initDatabase();
-        UserModel userModel = new UserModel(dbTools);
+        ItemModel itemModel = new ItemModel(dbTools);
+        InventoryModel inventoryModel = new InventoryModel(dbTools, itemModel);
+        StoreModel storeModel = new StoreModel(dbTools, inventoryModel);
+        StoreController storeController = new StoreController(storeModel);
+        UserModel userModel = new UserModel(dbTools, storeController);
 
-        User user = new User(UUID.randomUUID(), "test@test3.fr", "test3", BCrypt.hashpw("test", BCrypt.gensalt()), Role.USER);
+        User user = new User(UUID.randomUUID(), "test@test3.fr", "test3", BCrypt.hashpw("test", BCrypt.gensalt()), Role.USER, new ArrayList<>());
 
         userModel.addUser(user);
 
