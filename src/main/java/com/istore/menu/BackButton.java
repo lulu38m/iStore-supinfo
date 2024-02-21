@@ -8,7 +8,7 @@ public class BackButton extends MenuItem {
     private final WindowManager windowManager;
 
     public BackButton(WindowManager windowManager) {
-        super("Retour");
+        super("Back");
         this.windowManager = windowManager;
     }
 

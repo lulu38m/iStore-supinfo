@@ -19,7 +19,7 @@ public class LoginWindow extends JPanel {
     private void initializeWindow() {
         emailField = new JTextField(15); // Set preferred columns
         passwordField = new JPasswordField(15); // Set preferred columns
-        loginButton = new JButton("Se connecter");
+        loginButton = new JButton("Login");
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -27,9 +27,9 @@ public class LoginWindow extends JPanel {
         panel.setAlignmentY(Component.CENTER_ALIGNMENT);
 
         JPanel loginPanel = new JPanel();
-        panel.add(new JLabel("Adresse mail:"));
+        panel.add(new JLabel("Email address:"));
         panel.add(emailField);
-        panel.add(new JLabel("Mot de passe:"));
+        panel.add(new JLabel("Password:"));
         panel.add(passwordField);
 
         JPanel buttonPanel = new JPanel();
@@ -46,23 +46,23 @@ public class LoginWindow extends JPanel {
 
     private void handleLogin() {
         if (emailField.getText().isEmpty() || passwordField.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         Optional<User> user = userController.getUserByEmail(emailField.getText());
         if (user.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nom d'utilisateur ou mot de passe incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Email or password incorrect", "Error", JOptionPane.ERROR_MESSAGE); // "Nom d'utilisateur ou mot de passe incorrect
             return;
         }
 
         boolean isPasswordCorrect = userController.checkUserLogins(user.get(), emailField.getText(), String.valueOf(passwordField.getPassword()));
         if (!isPasswordCorrect) {
-            JOptionPane.showMessageDialog(this, "Nom d'utilisateur ou mot de passe incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Email or password incorrect", "Error", JOptionPane.ERROR_MESSAGE); // "Nom d'utilisateur ou mot de passe incorrect
             return;
         }
 
-        JOptionPane.showMessageDialog(this, "Connexion réussie", "Succès", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Login successful", "Success", JOptionPane.INFORMATION_MESSAGE);
         userController.login(user.get());
     }
 }

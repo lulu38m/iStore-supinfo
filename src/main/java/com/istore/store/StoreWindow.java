@@ -6,7 +6,7 @@ import com.istore.user.User;
 import javax.swing.*;
 import java.awt.*;
 
-public class  StoreWindow extends JPanel {
+public class StoreWindow extends JPanel {
 
     private JLabel storeNameLabel;
 

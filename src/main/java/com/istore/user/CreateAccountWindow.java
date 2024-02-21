@@ -20,15 +20,15 @@ public class CreateAccountWindow extends JPanel {
         usernameField = new JTextField(15); // Set preferred columns
         emailField = new JTextField(15); // Set preferred columns
         passwordField = new JPasswordField(15); // Set preferred columns
-        registerButton = new JButton("Créer");
+        registerButton = new JButton("Create");
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel("Nom d'utilisateur:"));
+        panel.add(new JLabel("Username:"));
         panel.add(usernameField);
-        panel.add(new JLabel("Adresse email:"));
+        panel.add(new JLabel("Email address:"));
         panel.add(emailField);
-        panel.add(new JLabel("Mot de passe:"));
+        panel.add(new JLabel("Password:"));
         panel.add(passwordField);
 
         registerButton.addActionListener(e -> handleRegister());
@@ -43,17 +43,17 @@ public class CreateAccountWindow extends JPanel {
 
     private void handleRegister() {
         if (usernameField.getText().isEmpty() || emailField.getText().isEmpty() || passwordField.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
             userController.createUser(emailField.getText(), usernameField.getText(), String.valueOf(passwordField.getPassword()));
-            JOptionPane.showMessageDialog(this, "Compte créé avec succès", "Succès", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Account created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
 
             parentWindow.changeWindowToLogin();
         } catch (RuntimeException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -32,8 +32,8 @@ public class LoginOrCreateWindow extends JPanel {
     private JPanel noAccountPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(new Label("Vous n'avez pas de compte?"));
-        JButton createAccountButton = new JButton("Créer un compte");
+        panel.add(new Label("You don't have an account?"));
+        JButton createAccountButton = new JButton("Create account");
         panel.add(createAccountButton);
 
         createAccountButton.addActionListener(e -> {
@@ -50,8 +50,8 @@ public class LoginOrCreateWindow extends JPanel {
     private JPanel alreadyHaveAccountPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        panel.add(new Label("Vous avez déjà un compte?"));
-        JButton loginButton = new JButton("Se connecter");
+        panel.add(new Label("Already have an account?"));
+        JButton loginButton = new JButton("Login");
         panel.add(loginButton);
 
         loginButton.addActionListener(e -> {
