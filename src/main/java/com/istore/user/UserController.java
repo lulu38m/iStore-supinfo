@@ -78,6 +78,10 @@ public class UserController {
         userModel.updateUser(user);
     }
 
+    public void deleteUser(User user) {
+        userModel.removeUser(user);
+    }
+
     public void login(User user) {
         userModel.login(user);
     }

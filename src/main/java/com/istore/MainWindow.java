@@ -1,17 +1,12 @@
 package com.istore;
 
-import com.istore.inventory.Inventory;
 import com.istore.inventory.InventoryController;
 import com.istore.menu.AdminMenu;
 import com.istore.menu.BackButton;
 import com.istore.menu.UserMenu;
 import com.istore.store.ListStoreWindow;
-import com.istore.user.*;
 import com.istore.store.StoreController;
-import com.istore.user.LoginOrCreateWindow;
-import com.istore.user.User;
-import com.istore.user.UserController;
-import com.istore.user.UserLoginEventsListener;
+import com.istore.user.*;
 
 import javax.swing.*;
 
@@ -21,9 +16,9 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
     private final UserController userController;
     private final WhitelistUserController whitelistUserController;
     private final JLabel userLabel;
-    private User loggedInUser;
     private final StoreController storeController;
     private final InventoryController inventoryController;
+    private User loggedInUser;
 
     public MainWindow(UserController userController, WhitelistUserController whitelistUserController, StoreController storeController, InventoryController inventoryController) {
         this.storeController = storeController;

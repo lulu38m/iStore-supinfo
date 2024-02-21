@@ -22,7 +22,7 @@ public class UserModel implements UserLoginEventsSubscriber {
 
     public void addUser(User user) {
         String sql = "INSERT INTO \"USER\" (id, email, pseudo, password, role) VALUES (?, ?, ?, ?, ?)";
-        try (Connection connection = dbTools.getConnection();
+        try (Connection connection = DbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getId().toString());
             statement.setString(2, user.getEmail());
@@ -38,7 +38,7 @@ public class UserModel implements UserLoginEventsSubscriber {
 
     public boolean updateUser(User user) {
         String sql = "UPDATE \"USER\" SET pseudo = ?, password = ?, role = ? WHERE email = ?";
-        try (Connection connection = dbTools.getConnection();
+        try (Connection connection = DbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getPseudo());
             statement.setString(2, user.getPasswordHash());
@@ -53,7 +53,7 @@ public class UserModel implements UserLoginEventsSubscriber {
 
     public Optional<User> getUserByEmail(String email) {
         String sql = "SELECT * FROM \"USER\" WHERE email = ?";
-        try (Connection connection = dbTools.getConnection();
+        try (Connection connection = DbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
             ResultSet rs = statement.executeQuery();
@@ -74,6 +74,18 @@ public class UserModel implements UserLoginEventsSubscriber {
         }
 
         return Optional.empty();
+    }
+
+    public void removeUser(User user) {
+        String sql = "DELETE FROM \"USER\" WHERE id = ?";
+        try (Connection connection = DbTools.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user.getId().toString());
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     public void login(User user) {
@@ -107,6 +119,8 @@ public class UserModel implements UserLoginEventsSubscriber {
 
         return usersList;
     }
+
+
 
 
     @Override

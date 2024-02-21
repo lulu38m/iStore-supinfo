@@ -8,7 +8,6 @@ import com.istore.user.User;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListStoreWindow extends JPanel implements StoreListener {
 
@@ -17,7 +16,6 @@ public class ListStoreWindow extends JPanel implements StoreListener {
     private final InventoryController inventoryController;
     private final JPanel storesPanel;
     private final WindowManager windowManager;
-
     private final User loggedinUser;
 
     public ListStoreWindow(StoreController storeController, InventoryController inventoryController, WindowManager windowManager, User loggedinUser) {
@@ -56,7 +54,7 @@ public class ListStoreWindow extends JPanel implements StoreListener {
         addButton.addActionListener(e -> {
             String storeName = storeNameField.getText().trim();
             if (!storeName.isEmpty()) {
-                Inventory inventory = new Inventory(new ArrayList<>());
+                Inventory inventory = inventoryController.addInventory(new ArrayList<>());
                 storeController.addStore(new Store(storeName, String.valueOf(storeController.getStoresList().size() + 1), inventory));
                 storeNameField.setText("");
             }
