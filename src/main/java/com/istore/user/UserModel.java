@@ -34,13 +34,13 @@ public class UserModel implements UserLoginEventsSubscriber {
     }
 
     public boolean updateUser(User user) {
-        String sql = "UPDATE \"USER\" SET pseudo = ?, password = ?, role = ? WHERE email = ?";
+        String sql = "UPDATE \"USER\" SET pseudo = ?, email = ?, role = ? WHERE id = ?";
         try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getPseudo());
-            statement.setString(2, user.getPasswordHash());
+            statement.setString(2, user.getEmail());
             statement.setString(3, user.getRole().name());
-            statement.setString(4, user.getEmail());
+            statement.setString(4, user.getId().toString());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

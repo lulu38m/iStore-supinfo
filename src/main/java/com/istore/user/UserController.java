@@ -65,6 +65,10 @@ public class UserController {
     }
 
     public void updateUser(User user) throws IllegalArgumentException {
+        if (user.getPseudo().isEmpty() || user.getEmail().isEmpty() || user.getRole() == null) {
+            throw new IllegalArgumentException("Pseudo, email and role cannot be empty");
+        }
+
         // Check if the email or pseudo are already taken by another user.
         // If we just change the user's role, the email and pseudo will remain the same.
         if (userModel.getUsersList().stream().anyMatch(u -> !u.getId().equals(user.getId()) && u.getEmail().equals(user.getEmail()))) {
@@ -73,6 +77,11 @@ public class UserController {
 
         if (userModel.getUsersList().stream().anyMatch(u -> !u.getId().equals(user.getId()) && u.getPseudo().equals(user.getPseudo()))) {
             throw new IllegalArgumentException("Pseudo already taken");
+        }
+
+        // Check if the email is valid
+        if (!EmailValidator.isValid(user.getEmail())) {
+            throw new IllegalArgumentException("Email not valid");
         }
 
         userModel.updateUser(user);

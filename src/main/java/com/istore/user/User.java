@@ -25,4 +25,8 @@ public class User {
         this.role = role;
     }
 
+    public User clone() {
+        return new User(this.id, this.email, this.pseudo, this.role);
+    }
+
 }

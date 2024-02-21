@@ -10,10 +10,12 @@ public class UserListTableModel extends AbstractTableModel {
     private final List<User> users = new ArrayList<>();
     private final UserController userController;
     private final User loggedInUser;
+    private final UserLoginEventsListener listener;
 
-    public UserListTableModel(UserController userController, User loggedInUser) {
+    public UserListTableModel(UserController userController, User loggedInUser, UserLoginEventsListener listener) {
         this.userController = userController;
         this.loggedInUser = loggedInUser;
+        this.listener = listener;
     }
 
     @Override
@@ -82,9 +84,9 @@ public class UserListTableModel extends AbstractTableModel {
 
         try {
             userController.updateUser(user);
+            listener.onUpdate(user);
         } catch (IllegalArgumentException e) {
             // Show error message and revert the change
-
             user.setPseudo(originalPseudo);
             user.setEmail(originalEmail);
             user.setRole(originalRole);

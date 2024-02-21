@@ -78,7 +78,7 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
             setJMenuBar(menuBar);
             return;
         }
-        JMenu userMenu = new UserMenu(userController, loggedInUser, windowManager);
+        JMenu userMenu = new UserMenu(userController, loggedInUser, windowManager, this);
 
         if (loggedInUser.getRole().equals(Role.ADMIN)) {
             JMenu adminMenu = new AdminMenu(windowManager, userController, whitelistUserController, loggedInUser);
