@@ -3,6 +3,7 @@ package com.istore.store;
 import com.istore.WindowManager;
 import com.istore.inventory.Inventory;
 import com.istore.inventory.InventoryController;
+import com.istore.inventory.ItemController;
 import com.istore.user.User;
 
 import javax.swing.*;
@@ -20,12 +21,15 @@ public class ListStoreWindow extends JPanel implements StoreListener {
 
     private final User loggedinUser;
 
-    public ListStoreWindow(StoreController storeController, InventoryController inventoryController, WindowManager windowManager, User loggedinUser) {
+    private final ItemController itemController;
+
+    public ListStoreWindow(StoreController storeController, InventoryController inventoryController, WindowManager windowManager, User loggedinUser, ItemController itemController) {
         this.storeController = storeController;
         this.inventoryController = inventoryController;
         this.storesPanel = new JPanel(new GridLayout(storeController.getStoresList().size(), 1));
         this.windowManager = windowManager;
         this.loggedinUser = loggedinUser;
+        this.itemController = itemController;
         initializeWindow();
         storeController.addStoreListener(this);
     }
@@ -38,10 +42,11 @@ public class ListStoreWindow extends JPanel implements StoreListener {
         headerPanel.add(headerLabel);
         add(headerPanel, BorderLayout.NORTH);
 
+
         for (Store store : storeController.getStoresList()) {
             JButton storeButton = new JButton(store.getName());
             storeButton.addActionListener(e -> {
-                windowManager.goToWindow(new StoreWindow(store, storeController, windowManager, loggedinUser));
+                windowManager.goToWindow(new StoreWindow(store, loggedinUser, itemController, storeController, windowManager));
             });
             storesPanel.add(storeButton);
         }
@@ -51,6 +56,7 @@ public class ListStoreWindow extends JPanel implements StoreListener {
         JPanel inputPanel = new JPanel(new BorderLayout());
         JTextField storeNameField = new JTextField();
         inputPanel.add(storeNameField, BorderLayout.CENTER);
+
 
         JButton addButton = new JButton("Ajouter un magasin");
         addButton.addActionListener(e -> {
@@ -67,10 +73,25 @@ public class ListStoreWindow extends JPanel implements StoreListener {
     }
 
     @Override
-    public void storeAdded(Store store) {
+    public void onStoreAdded(Store store) {
         JButton storeButton = new JButton(store.getName());
         storesPanel.add(storeButton);
         revalidate();
         repaint();
+    }
+
+    @Override
+    public void onStoreDeleted(Store store) {
+        for (Component component : storesPanel.getComponents()) {
+            if (component instanceof JButton) {
+                JButton button = (JButton) component;
+                if (button.getText().equals(store.getName())) {
+                    storesPanel.remove(button);
+                    revalidate();
+                    repaint();
+                    break;
+                }
+            }
+        }
     }
 }

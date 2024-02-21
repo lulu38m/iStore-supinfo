@@ -1,13 +1,22 @@
 package com.istore.inventory;
 
-public class ItemController {
-    private final ItemModel itemModel;
+import com.istore.store.StoreListener;
+import lombok.RequiredArgsConstructor;
 
-    public ItemController(ItemModel itemModel) {
-        this.itemModel = itemModel;
-    }
+import java.util.List;
+
+@RequiredArgsConstructor
+public class ItemController {
+
+    private final ItemModel itemModel;
 
     public void removeItem(Item item) {
         this.itemModel.removeItem(item);
     }
+
+    public void addItem(Item item) {
+        this.itemModel.addItem(item);
+    }
+
+
 }

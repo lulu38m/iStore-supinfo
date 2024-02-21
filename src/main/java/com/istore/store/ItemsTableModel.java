@@ -5,6 +5,7 @@ import com.istore.user.User;
 import com.istore.user.Role;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -79,11 +80,11 @@ public class ItemsTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-       if (loggedinUser.getRole() == Role.ADMIN) {
+        if (loggedinUser.getRole() == Role.ADMIN) {
             return true;
         } else if (loggedinUser.getRole() == Role.USER && columnIndex == 2) {
             return true;
-        }else if (loggedinUser.getRole() == Role.USER && columnIndex == 3) {
+        } else if (loggedinUser.getRole() == Role.USER && columnIndex == 3) {
             return false;
         }
         return false;
@@ -93,5 +94,10 @@ public class ItemsTableModel extends AbstractTableModel {
         Item item = itemsList.remove(rowIndex);
         fireTableRowsDeleted(rowIndex, rowIndex);
         return item;
+    }
+
+    public void addItem(Item item) {
+        itemsList.add(item);
+        fireTableDataChanged();
     }
 }

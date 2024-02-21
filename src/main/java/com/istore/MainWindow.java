@@ -2,6 +2,7 @@ package com.istore;
 
 import com.istore.inventory.Inventory;
 import com.istore.inventory.InventoryController;
+import com.istore.inventory.ItemController;
 import com.istore.menu.AdminMenu;
 import com.istore.menu.BackButton;
 import com.istore.menu.UserMenu;
@@ -23,11 +24,12 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
     private User loggedInUser;
     private final StoreController storeController;
     private InventoryController inventory;
+    private final ItemController itemController;
 
 
-
-    public MainWindow(UserController userController, StoreController storeController, Inventory inventory) {
+    public MainWindow(UserController userController, StoreController storeController, Inventory inventory, ItemController itemController) {
         this.storeController = storeController;
+        this.itemController = itemController;
 
         JPanel windowPanel = new JPanel();
         windowPanel.setLayout(new BoxLayout(windowPanel, BoxLayout.Y_AXIS));
@@ -54,7 +56,7 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
 
         updateMenuBar();
 
-        windowManager.goToWindow(new ListStoreWindow(storeController, inventory, windowManager, loggedInUser));
+        windowManager.goToWindow(new ListStoreWindow(storeController, inventory, windowManager, loggedInUser, itemController));
     }
 
     @Override

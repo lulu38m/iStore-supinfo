@@ -1,10 +1,7 @@
 package com.istore;
 
 import com.istore.database.DbTools;
-import com.istore.inventory.Inventory;
-import com.istore.inventory.InventoryController;
-import com.istore.inventory.Item;
-import com.istore.inventory.ItemModel;
+import com.istore.inventory.*;
 import com.istore.user.*;
 import com.istore.store.Store;
 import com.istore.store.StoreController;
@@ -42,10 +39,12 @@ public class Main {
 
 
         ItemModel itemModel = new ItemModel();
-        itemModel.addItem(new Item("item1", "1", 10, 11));
-        itemModel.addItem(new Item("item2", "2", 20, 21));
-        itemModel.addItem(new Item("item3", "3", 30, 31));
-        itemModel.addItem(new Item("item4", "4", 40, 41));
+        itemModel.addItem(new Item("1", 10, 11));
+        itemModel.addItem(new Item("2", 20, 21));
+        itemModel.addItem(new Item("3", 30, 31));
+        itemModel.addItem(new Item("4", 40, 41));
+
+        ItemController ItemController = new ItemController(itemModel);
 
         Inventory inventory = new Inventory(itemModel.getItemsList().subList(0, 2));
         Inventory inventory2 = new Inventory(itemModel.getItemsList().subList(2, 4));
@@ -56,7 +55,7 @@ public class Main {
         storeModel.addStore(new Store("Magasin 2", "2", inventory2));
 
         storeController = new StoreController(storeModel);
-        window = new MainWindow(userController, storeController, inventory);
+        window = new MainWindow(userController, storeController, inventory, ItemController);
         window.setVisible(true);
     }
 

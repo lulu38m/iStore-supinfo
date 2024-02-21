@@ -26,8 +26,13 @@ public class StoreController {
 
     private void notifyListeners(Store store) {
         for (StoreListener listener : listeners) {
-            listener.storeAdded(store);
+            listener.onStoreAdded(store);
         }
+    }
+
+    public void deleteStore(String storeName) {
+        Store store = storeModel.deleteStore(storeName);
+        listeners.forEach(listener -> listener.onStoreDeleted(store));
     }
 
     public List<Store> getStoresList() {

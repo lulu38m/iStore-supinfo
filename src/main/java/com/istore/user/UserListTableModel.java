@@ -17,7 +17,7 @@ public class UserListTableModel extends AbstractTableModel {
     private final StoreController storeController;
     private final User loggedInUser;
 
-    public UserListTableModel(UserController userController,StoreController storeController, User loggedInUser) {
+    public UserListTableModel(UserController userController, StoreController storeController, User loggedInUser) {
         this.userController = userController;
         this.loggedInUser = loggedInUser;
         this.storeController = storeController;
@@ -64,8 +64,8 @@ public class UserListTableModel extends AbstractTableModel {
                 return user.getEmail();
             case 3:
                 return user.getRole().toString();
-                case 4:
-                    return user.getStores().stream().map(Store::getName).collect(Collectors.joining(", "));
+            case 4:
+                return user.getStores().stream().map(Store::getName).collect(Collectors.joining(", "));
             default:
                 return "";
         }

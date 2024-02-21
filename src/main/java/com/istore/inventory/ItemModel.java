@@ -23,7 +23,9 @@ public class ItemModel {
         this.itemsList.add(item);
     }
 
-    public void removeItem( Item item) {
-        this.itemsList.remove( item);
+    public void removeItem(Item item) {
+        this.itemsList.remove(item);
     }
+
+
 }

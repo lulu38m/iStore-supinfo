@@ -1,5 +1,7 @@
 package com.istore.store;
 
 public interface StoreListener {
-    void storeAdded(Store store);
+    void onStoreAdded(Store store);
+
+    void onStoreDeleted(Store store);
 }

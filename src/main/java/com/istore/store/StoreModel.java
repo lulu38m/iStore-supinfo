@@ -15,6 +15,16 @@ public class StoreModel {
         this.storesList.add(store);
     }
 
+    public Store deleteStore(String storeName) {
+        for (Store store : storesList) {
+            if (store.getName().equals(storeName)) {
+                storesList.remove(store);
+                return store;
+            }
+        }
+        return null;
+    }
+
     public List<Store> getStoresList() {
         return storesList;
     }
