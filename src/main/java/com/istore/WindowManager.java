@@ -37,6 +37,10 @@ public class WindowManager {
         }
     }
 
+    public void resetHistory() {
+        historyPanels.clear();
+    }
+
     public void initializeWindow() {
         frame.setTitle("iStore");
         frame.setSize(600, 400);

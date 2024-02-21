@@ -16,7 +16,6 @@ public class UserProfileWindow extends JPanel {
         initializeWindow();
     }
 
-    // Initialize the user profile window that display the user's information (pseudo, email, role), the user can edit pseudo and email
     private void initializeWindow() {
         // Save the user state before any modification to be able to restore it if the user cancel the modification
         AtomicReference<String> originalPseudo = new AtomicReference<>(loggedInUser.getPseudo());
@@ -55,14 +54,17 @@ public class UserProfileWindow extends JPanel {
         // Create the buttons
         JButton editButton = new JButton("Edit");
         JButton saveButton = new JButton("Save");
+        JButton deleteAccount = new JButton("Delete Account");
 
         // Set the position and size of the buttons
         editButton.setBounds(150, 150, 100, 30);
         saveButton.setBounds(250, 150, 100, 30);
+        deleteAccount.setBounds(150, 200, 200, 30);
 
         // Add the buttons to the panel
         add(editButton);
         add(saveButton);
+        add(deleteAccount);
 
         // Add an action listener to the edit button
         editButton.addActionListener(e -> {
@@ -103,6 +105,15 @@ public class UserProfileWindow extends JPanel {
 
             listener.onUpdate(loggedInUser); // Trigger the onUpdate method of the main window to update the user's information and to force the update of the menu bar
             JOptionPane.showMessageDialog(null, "User updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        // Add an action listener to the delete account button
+        deleteAccount.addActionListener(e -> {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your account?", "Warning", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                userController.deleteUser(loggedInUser);
+                listener.onDelete(loggedInUser);
+            }
         });
 
         // Set the text fields as not editable

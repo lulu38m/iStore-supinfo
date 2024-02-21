@@ -5,14 +5,14 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserListTableModel extends AbstractTableModel {
+public class ListUsersTableModel extends AbstractTableModel {
 
     private final List<User> users = new ArrayList<>();
     private final UserController userController;
     private final User loggedInUser;
     private final UserLoginEventsListener listener;
 
-    public UserListTableModel(UserController userController, User loggedInUser, UserLoginEventsListener listener) {
+    public ListUsersTableModel(UserController userController, User loggedInUser, UserLoginEventsListener listener) {
         this.userController = userController;
         this.loggedInUser = loggedInUser;
         this.listener = listener;
@@ -20,7 +20,7 @@ public class UserListTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -40,6 +40,8 @@ public class UserListTableModel extends AbstractTableModel {
                 return "Email";
             case 3:
                 return "Role";
+            case 4:
+                return "Actions";
             default:
                 return "";
         }
@@ -57,6 +59,8 @@ public class UserListTableModel extends AbstractTableModel {
                 return user.getEmail();
             case 3:
                 return user.getRole().toString();
+            case 4:
+                return "Delete";
             default:
                 return "";
         }
@@ -105,5 +109,11 @@ public class UserListTableModel extends AbstractTableModel {
     public void addUsers(List<User> userList) {
         this.users.addAll(userList);
         this.fireTableDataChanged();
+    }
+
+    public User deleteUser(int rowIndex) {
+        User removedUser = users.remove(rowIndex);
+        this.fireTableDataChanged();
+        return removedUser;
     }
 }

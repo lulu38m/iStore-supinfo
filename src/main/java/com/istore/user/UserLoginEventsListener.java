@@ -6,4 +6,6 @@ public interface UserLoginEventsListener {
     void onLogout();
 
     void onUpdate(User newUser);
+
+    void onDelete(User user);
 }

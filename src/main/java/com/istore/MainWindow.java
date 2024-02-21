@@ -57,6 +57,8 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
     public void onLogout() {
         loggedInUser = null;
         userLabel.setText("");
+        // Reset the history
+        windowManager.resetHistory();
         windowManager.goToWindow(new LoginOrCreateWindow(userController, windowManager));
         updateMenuBar();
     }
@@ -68,6 +70,14 @@ public class MainWindow extends JFrame implements UserLoginEventsListener {
             loggedInUser = newUser;
             userLabel.setText("Hello, " + newUser.getPseudo() + "!");
             updateMenuBar();
+        }
+    }
+
+    @Override
+    public void onDelete(User user) {
+        if (loggedInUser != null && loggedInUser.getId().equals(user.getId())) {
+            // Send the logged user to the login window if the deleted user is the logged user
+            onLogout();
         }
     }
 
