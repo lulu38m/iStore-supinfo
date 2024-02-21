@@ -19,7 +19,7 @@ public class WhitelistUserModel {
 
     public void addWhitelistedEmail(Whitelist whitelist) throws RuntimeException {
         String sql = "INSERT INTO \"WHITELISTED_EMAIL\" (id, email) VALUES (?, ?)";
-        try (Connection connection = DbTools.getConnection();
+        try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, whitelist.getId().toString());
             statement.setString(2, whitelist.getEmail());
@@ -32,7 +32,7 @@ public class WhitelistUserModel {
 
     public boolean hasWhitelistedEmail(String email) throws RuntimeException {
         String sql = "SELECT email FROM \"WHITELISTED_EMAIL\" WHERE email = ?";
-        try (Connection connection = DbTools.getConnection();
+        try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
             ResultSet rs = statement.executeQuery();
@@ -45,7 +45,7 @@ public class WhitelistUserModel {
 
     public void removeWhitelistedEmail(String email) throws RuntimeException {
         String sql = "DELETE FROM \"WHITELISTED_EMAIL\" WHERE email = ?";
-        try (Connection connection = DbTools.getConnection();
+        try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
             statement.execute();
@@ -57,7 +57,7 @@ public class WhitelistUserModel {
 
     public void clearWhitelistedEmails() throws RuntimeException {
         String sql = "DELETE FROM \"WHITELISTED_EMAIL\"";
-        try (Connection connection = DbTools.getConnection();
+        try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.execute();
         } catch (SQLException e) {
@@ -68,7 +68,7 @@ public class WhitelistUserModel {
 
     public List<Whitelist> getWhitelistedEmails() throws RuntimeException {
         List<Whitelist> whitelistedEmails = new ArrayList<>();
-        try (Connection connection = DbTools.getConnection();
+        try (Connection connection = dbTools.getConnection();
              Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery("SELECT id, email FROM \"WHITELISTED_EMAIL\"");
             while (rs.next()) {

@@ -16,12 +16,11 @@ public class ButtonColumn extends AbstractCellEditor
         implements TableCellRenderer, TableCellEditor, ActionListener, MouseListener {
     private final JTable table;
     private final Action action;
-    private int mnemonic;
     private final Border originalBorder;
-    private Border focusBorder;
-
     private final JButton renderButton;
     private final JButton editButton;
+    private int mnemonic;
+    private Border focusBorder;
     private Object editorValue;
     private boolean isButtonColumnEditor;
 

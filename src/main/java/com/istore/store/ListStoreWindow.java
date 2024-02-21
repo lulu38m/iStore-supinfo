@@ -7,6 +7,7 @@ import com.istore.user.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class ListStoreWindow extends JPanel implements StoreListener {
@@ -38,9 +39,7 @@ public class ListStoreWindow extends JPanel implements StoreListener {
 
         for (Store store : storeController.getStoresList()) {
             JButton storeButton = new JButton(store.getName());
-            storeButton.addActionListener(e -> {
-                windowManager.goToWindow(new StoreWindow(store, storeController, windowManager, loggedinUser));
-            });
+            storeButton.addActionListener(e -> storeButtonAction(e, store));
             storesPanel.add(storeButton);
         }
         JScrollPane storesScrollPane = new JScrollPane(storesPanel);
@@ -68,7 +67,12 @@ public class ListStoreWindow extends JPanel implements StoreListener {
     public void storeAdded(Store store) {
         JButton storeButton = new JButton(store.getName());
         storesPanel.add(storeButton);
+        storeButton.addActionListener(e -> storeButtonAction(e, store));
         revalidate();
         repaint();
+    }
+
+    private void storeButtonAction(ActionEvent e, Store store) {
+        windowManager.goToWindow(new StoreWindow(store, storeController, windowManager, loggedinUser));
     }
 }

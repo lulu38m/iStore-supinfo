@@ -2,6 +2,7 @@ package com.istore.user;
 
 import com.istore.database.DbTools;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,19 +11,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Getter
+@RequiredArgsConstructor
 public class UserModel implements UserLoginEventsSubscriber {
 
     private final DbTools dbTools;
-    private final List<UserLoginEventsListener> listeners;
-
-    public UserModel(DbTools dbTools) {
-        this.dbTools = dbTools;
-        this.listeners = new ArrayList<>();
-    }
+    private final List<UserLoginEventsListener> listeners = new ArrayList<>();
 
     public void addUser(User user) {
         String sql = "INSERT INTO \"USER\" (id, email, pseudo, password, role) VALUES (?, ?, ?, ?, ?)";
-        try (Connection connection = DbTools.getConnection();
+        try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getId().toString());
             statement.setString(2, user.getEmail());
@@ -38,7 +35,7 @@ public class UserModel implements UserLoginEventsSubscriber {
 
     public boolean updateUser(User user) {
         String sql = "UPDATE \"USER\" SET pseudo = ?, password = ?, role = ? WHERE email = ?";
-        try (Connection connection = DbTools.getConnection();
+        try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getPseudo());
             statement.setString(2, user.getPasswordHash());
@@ -53,7 +50,7 @@ public class UserModel implements UserLoginEventsSubscriber {
 
     public Optional<User> getUserByEmail(String email) {
         String sql = "SELECT * FROM \"USER\" WHERE email = ?";
-        try (Connection connection = DbTools.getConnection();
+        try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, email);
             ResultSet rs = statement.executeQuery();
@@ -78,7 +75,7 @@ public class UserModel implements UserLoginEventsSubscriber {
 
     public void removeUser(User user) {
         String sql = "DELETE FROM \"USER\" WHERE id = ?";
-        try (Connection connection = DbTools.getConnection();
+        try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getId().toString());
             statement.execute();
@@ -99,7 +96,7 @@ public class UserModel implements UserLoginEventsSubscriber {
 
     public List<User> getUsersList() {
         List<User> usersList = new ArrayList<>();
-        try (Connection connection = DbTools.getConnection();
+        try (Connection connection = dbTools.getConnection();
              Statement statement = connection.createStatement()) {
 
             ResultSet rs = statement.executeQuery("SELECT id, email, pseudo, role FROM \"USER\"");
@@ -119,8 +116,6 @@ public class UserModel implements UserLoginEventsSubscriber {
 
         return usersList;
     }
-
-
 
 
     @Override

@@ -14,17 +14,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DbTools {
-    private static final String url = "jdbc:h2:file:./db/istore;AUTO_SERVER=true";
-    private static final String user = "sa";
-    private static final String passwd = "";
+    private final String url = "jdbc:h2:file:./db/istore;AUTO_SERVER=true";
+    private final String user = "sa";
+    private final String passwd = "";
 
-    public static Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, passwd);
-
     }
 
     public void initDatabase() {
-
         Map<String, Object> config = new HashMap<>();
         config.put("liquibase.licenseKey", "YOUR_PRO_KEY");
 
