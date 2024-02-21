@@ -19,16 +19,16 @@ public class ListStoreWindow extends JPanel implements StoreListener {
     private final JPanel storesPanel;
     private final WindowManager windowManager;
 
-    private final User loggedinUser;
+    private final User loggedInUser;
 
     private final ItemController itemController;
 
-    public ListStoreWindow(StoreController storeController, InventoryController inventoryController, WindowManager windowManager, User loggedinUser, ItemController itemController) {
+    public ListStoreWindow(StoreController storeController, InventoryController inventoryController, WindowManager windowManager, User loggedInUser, ItemController itemController) {
         this.storeController = storeController;
         this.inventoryController = inventoryController;
         this.storesPanel = new JPanel(new GridLayout(storeController.getStoresList().size(), 1));
         this.windowManager = windowManager;
-        this.loggedinUser = loggedinUser;
+        this.loggedInUser = loggedInUser;
         this.itemController = itemController;
         initializeWindow();
         storeController.addStoreListener(this);
@@ -45,7 +45,7 @@ public class ListStoreWindow extends JPanel implements StoreListener {
         for (Store store : storeController.getStoresList()) {
             JButton storeButton = new JButton(store.getName());
             storeButton.addActionListener(e -> {
-                windowManager.goToWindow(new StoreWindow(store, loggedinUser, itemController, storeController, windowManager));
+                windowManager.goToWindow(new StoreWindow(store, loggedInUser, itemController, storeController, windowManager));
             });
             storesPanel.add(storeButton);
         }
@@ -61,7 +61,7 @@ public class ListStoreWindow extends JPanel implements StoreListener {
             String storeName = storeNameField.getText().trim();
             if (!storeName.isEmpty()) {
                 Inventory inventory = inventoryController.addInventory(new ArrayList<>());
-                storeController.addStore(new Store(storeName, String.valueOf(storeController.getStoresList().size() + 1), inventory));
+                storeController.addStore(new Store(storeName, inventory));
                 storeNameField.setText("");
             }
         });
@@ -95,6 +95,6 @@ public class ListStoreWindow extends JPanel implements StoreListener {
     }
 
     private void storeButtonAction(ActionEvent e, Store store) {
-        windowManager.goToWindow(new StoreWindow(store, storeController, windowManager, loggedinUser));
+        windowManager.goToWindow(new StoreWindow(store, loggedInUser,itemController, storeController, windowManager));
     }
 }

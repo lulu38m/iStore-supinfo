@@ -24,7 +24,7 @@ public class StoreModel {
         String sql = "INSERT INTO \"STORE\" (id, name, inventory_id) VALUES (?, ?, ?)";
         try (Connection connection = dbTools.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, store.getId());
+            statement.setString(1, store.getId().toString());
             statement.setString(2, store.getName());
             statement.setString(3, store.getInventory().getId().toString());
             statement.execute();
@@ -35,14 +35,17 @@ public class StoreModel {
 
     }
 
-    public Store deleteStore(String storeName) {
-        for (Store store : storesList) {
-            if (store.getName().equals(storeName)) {
-                storesList.remove(store);
-                return store;
-            }
+    public Store deleteStore(Store store) {
+        String sql = "DELETE FROM \"STORE\" WHERE id = ?";
+        try (Connection connection = dbTools.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, store.getId().toString());
+            statement.execute();
+            return store;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     public List<Store> getStoresList() {
@@ -56,7 +59,7 @@ public class StoreModel {
                 String name = rs.getString("name");
                 UUID inventoryId = UUID.fromString(rs.getString("inventory_id"));
                 Inventory inventory = inventoryModel.getInventoryById(inventoryId);
-                stores.add(new Store(name, id, inventory));
+                stores.add(new Store(UUID.fromString(id),name, inventory));
             }
             return stores;
         } catch (SQLException e) {

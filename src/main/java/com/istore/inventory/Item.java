@@ -16,10 +16,11 @@ public class Item {
     public int price;
     public int quantity;
 
-    public Item(String name, int price, int quantity) {
+    public Item(String name, int price, int quantity, Inventory inventory) {
         this.id = UUID.randomUUID();
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.inventory = inventory;
     }
 }

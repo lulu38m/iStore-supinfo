@@ -8,15 +8,21 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
+@Setter
 @RequiredArgsConstructor
 public class Store {
 
+    private final UUID id;
     private final String name;
-    private final String id;
     private final Inventory inventory;
-
-    @Setter
     private List<User> users;
+
+    public Store(String name, Inventory inventory) {
+        this.id = UUID.randomUUID();
+        this.name = name;
+        this.inventory = inventory;
+    }
 }

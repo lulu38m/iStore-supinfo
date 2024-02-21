@@ -50,7 +50,7 @@ public class UserMenu extends JMenu {
 
         @Override
         public void onClick(ActionEvent e) {
-            windowManager.goToWindow(new ListUsersWindow(userController, loggedInUser,mainWindow, storeController));
+            windowManager.goToWindow(new ListUsersWindow(userController, loggedInUser, storeController, mainWindow));
         }
     }
 

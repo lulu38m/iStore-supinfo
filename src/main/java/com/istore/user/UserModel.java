@@ -1,6 +1,7 @@
 package com.istore.user;
 
 import com.istore.database.DbTools;
+import com.istore.store.StoreController;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +17,7 @@ public class UserModel implements UserLoginEventsSubscriber {
 
     private final DbTools dbTools;
     private final List<UserLoginEventsListener> listeners = new ArrayList<>();
+    private final StoreController storeController;
 
     public void addUser(User user) {
         String sql = "INSERT INTO \"USER\" (id, email, pseudo, password, role) VALUES (?, ?, ?, ?, ?)";
@@ -106,7 +108,12 @@ public class UserModel implements UserLoginEventsSubscriber {
                 String pseudo = rs.getString("pseudo");
                 String role = rs.getString("role");
 
-                User user = new User(UUID.fromString(id), email, pseudo, Role.valueOf(role));
+                User user = new User(UUID.fromString(id), email, pseudo, Role.valueOf(role), new ArrayList<>());
+                storeController.getStoresList().forEach(store -> {
+                    if (store.getUsers().stream().anyMatch(u -> u.getId().equals(user.getId()))){
+                        user.getStores().add(store);
+                    }
+                });
                 usersList.add(user);
             }
         } catch (SQLException e) {

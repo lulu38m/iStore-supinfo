@@ -30,8 +30,8 @@ public class StoreController {
         }
     }
 
-    public void deleteStore(String storeName) {
-        Store store = storeModel.deleteStore(storeName);
+    public void deleteStore(Store store) {
+        storeModel.deleteStore(store);
         listeners.forEach(listener -> listener.onStoreDeleted(store));
     }
 

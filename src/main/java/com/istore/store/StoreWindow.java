@@ -29,7 +29,7 @@ public class StoreWindow extends JPanel {
             JButton deleteStoreButton = new JButton("Delete Store");
 
             deleteStoreButton.addActionListener(e -> {
-                storeController.deleteStore(store.getName());
+                storeController.deleteStore(store);
                 windowManager.backToPreviousWindow();
             });
             panel.add(deleteStoreButton, BorderLayout.NORTH);
@@ -65,7 +65,7 @@ public class StoreWindow extends JPanel {
             String itemPrice = itemPriceField.getText().trim();
             String itemQuantity = itemQuantityField.getText().trim();
             if (!itemName.isEmpty() && !itemPrice.isEmpty() && !itemQuantity.isEmpty()) {
-                Item item = new Item(itemName, Integer.parseInt(itemPrice), Integer.parseInt(itemQuantity));
+                Item item = new Item(itemName, Integer.parseInt(itemPrice), Integer.parseInt(itemQuantity), store.getInventory());
                 tableModel.addItem(item);
                 itemController.addItem(item);
             }

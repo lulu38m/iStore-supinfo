@@ -22,15 +22,16 @@ public class User {
 
     private List<Store> stores;
 
-    public User(UUID id, String email, String pseudo, Role role) {
+    public User(UUID id, String email, String pseudo, Role role, List<Store> stores) {
         this.id = id;
         this.email = email;
         this.pseudo = pseudo;
         this.role = role;
+        this.stores = stores;
     }
 
     public User clone() {
-        return new User(this.id, this.email, this.pseudo, this.role);
+        return new User(this.id, this.email, this.pseudo, this.role, this.stores);
     }
 
 }

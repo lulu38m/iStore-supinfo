@@ -3,14 +3,14 @@ package com.istore;
 import com.istore.database.DbTools;
 import com.istore.inventory.InventoryController;
 import com.istore.inventory.InventoryModel;
+import com.istore.inventory.ItemController;
 import com.istore.inventory.ItemModel;
 import com.istore.store.StoreController;
 import com.istore.store.StoreModel;
 
-import com.istore.user.UserController;
-import com.istore.user.UserModel;
-import com.istore.user.WhitelistUserController;
-import com.istore.user.WhitelistUserModel;
+import com.istore.user.*;
+
+import java.util.UUID;
 
 public class Main {
 
@@ -22,6 +22,7 @@ public class Main {
 
         WhitelistUserModel whitelistUserModel = new WhitelistUserModel(dbTools);
         WhitelistUserController whitelistUserController = new WhitelistUserController(whitelistUserModel, userModel);
+        whitelistUserModel.addWhitelistedEmail(new Whitelist(UUID.randomUUID(),"aaa@aaa.fr"));
 
         UserController userController = new UserController(userModel, whitelistUserController);
 
@@ -35,6 +36,7 @@ public class Main {
 //        Inventory inventory2 = new Inventory(itemModel.getItemsList().subList(2, 4));
 //
         ItemModel itemModel = new ItemModel(dbTools);
+        ItemController itemController = new ItemController(itemModel);
         InventoryModel inventoryModel = new InventoryModel(dbTools, itemModel);
         InventoryController inventoryController = new InventoryController(inventoryModel);
         StoreModel storeModel = new StoreModel(dbTools, inventoryModel);
@@ -42,7 +44,7 @@ public class Main {
 //        storeModel.addStore(new Store("Magasin 2", "2", inventory2));
 
         StoreController storeController = new StoreController(storeModel);
-        MainWindow window = new MainWindow(userController, whitelistUserController, storeController, inventoryController);
+        MainWindow window = new MainWindow(userController, whitelistUserController, storeController, inventoryController,itemController);
         window.setVisible(true);
     }
 

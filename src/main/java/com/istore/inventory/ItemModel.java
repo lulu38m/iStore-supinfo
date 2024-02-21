@@ -51,7 +51,14 @@ public class ItemModel {
     }
 
     public void removeItem(Item item) {
-        this.itemsList.remove(item);
+        String sql = "DELETE FROM \"ITEM\" WHERE id = ?";
+        try (var connection = dbTools.getConnection(); var statement = connection.prepareStatement(sql)) {
+            statement.setString(1, item.getId().toString());
+            statement.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
 
